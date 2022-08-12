@@ -1,11 +1,9 @@
 import React, { Suspense } from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-import { Loading } from 'components';
+import { Loading, ScrollToTop } from 'components';
 
 import { AppPaths } from 'constants/app-paths';
-
-import ScrollToTop from 'hooks/scroll-to-top';
 
 const Router = () => {
 	return (
