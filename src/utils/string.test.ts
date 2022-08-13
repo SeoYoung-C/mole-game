@@ -1,5 +1,4 @@
-import { numberPadding } from 'utils/string';
-import { formatDate } from 'utils/format-date';
+import { numberPadding } from './string';
 
 describe('utils/string', () => {
 	test('NumberPadding decimal', () => {
@@ -58,21 +57,5 @@ describe('utils/string', () => {
 
 		const result9 = numberPadding(-1, -1, { radix: 2 });
 		expect(result9).toEqual('-1');
-	});
-});
-
-describe('utils/format-date', () => {
-	test('formatDate', () => {
-		const date = new Date(0);
-		expect(formatDate(date, 'YYYY')).toEqual('1970');
-		expect(formatDate(date, 'YY')).toEqual('70');
-		expect(formatDate(date, 'MM')).toEqual('01');
-		expect(formatDate(date, 'DD')).toEqual('01');
-		expect(formatDate(date, 'hh')).toEqual('00');
-		expect(formatDate(date, 'mm')).toEqual('00');
-		expect(formatDate(date, 'ss')).toEqual('00');
-		expect(formatDate(date, 'ms')).toEqual('000');
-
-		expect(formatDate(date, 'YYYY-MM-DDThh:mm:ss.msZ')).toEqual(date.toISOString());
 	});
 });
