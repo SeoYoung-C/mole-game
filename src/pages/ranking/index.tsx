@@ -1,24 +1,12 @@
 import React from 'react';
-import { deleteCookie, getCookie } from 'utils/cookie';
+
 import { Button } from 'components';
-import { Ranks } from './interface';
-import { formatDate } from '../../utils/format-date';
+import { formatDate } from 'utils/format-date';
+
+import useRanking from './hook';
 
 function Ranking() {
-	const [ranking, setRanking] = React.useState<Ranks[]>([]);
-
-	const onClickResetRanking = React.useCallback(() => {
-		setRanking([]);
-		deleteCookie('ranking');
-	}, []);
-
-	React.useEffect(() => {
-		const getRanking = getCookie('ranking');
-		if (getRanking) {
-			const rankList: Ranks[] = JSON.parse(getRanking);
-			setRanking(rankList);
-		}
-	}, []);
+	const { ranking, onClickResetRanking, onClickGameStart } = useRanking();
 
 	return (
 		<main>
@@ -40,7 +28,7 @@ function Ranking() {
 				<div>저장된 순위가 없어요. 지금 다시 게임을 시작하세요!</div>
 			)}
 
-			<Button>게임 시작</Button>
+			<Button onClick={onClickGameStart}>게임 시작</Button>
 		</main>
 	);
 }

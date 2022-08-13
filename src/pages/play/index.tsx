@@ -1,17 +1,8 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import Icon from 'assets/svgs';
 import { Button } from 'components';
-
-import { UseReadyStore } from 'stores/ready';
-import { UsePlayStore } from 'stores/play';
-
-import useTimer from 'hooks/useTimer';
-
-import { AppPaths } from 'constants/app-paths';
-import { visibleEventControl } from './visible-event-cotrol';
-import { ClearType, SetTimeoutRefType } from './interface';
+import usePlay from './hook';
 
 const ReturnColGroup = (col: number) => {
 	const result = [];
@@ -22,137 +13,22 @@ const ReturnColGroup = (col: number) => {
 };
 
 function Play() {
-	const navigate = useNavigate();
+	const {
+		time,
+		score,
+		componentRef,
+		col,
+		holes,
+		startGame,
+		parseGame,
 
-	const componentRef = React.useRef<HTMLTableElement>(null);
-	const holeSetTimeoutRef = React.useRef<SetTimeoutRefType>([]);
+		handleButtonElement,
 
-	const { col, holes, mole } = UseReadyStore();
-	const { score, handleDecreaseScore, handleIncreaseScore, clearPlayState } = UsePlayStore();
-
-	const [startGame, setStartGame] = React.useState<boolean>(false);
-	const [parseGame, setParseGame] = React.useState<boolean>(false);
-	const [levelTime, setLevelTime] = React.useState<number>(1500);
-
-	const handleHoleSettimeout = (data: SetTimeoutRefType) => {
-		holeSetTimeoutRef.current = data;
-	};
-
-	const visibleRendomHoleList = React.useCallback((): void => {
-		const showMoleList = holes.flat();
-		const eventHoleList = showMoleList.slice();
-		let moleNumber = 0;
-		while (moleNumber < mole) {
-			const selectMoleIndex = Math.floor(Math.random() * showMoleList.length);
-			eventHoleList.splice(selectMoleIndex, 1, selectMoleIndex);
-			moleNumber += 1;
-		}
-
-		visibleEventControl(
-			eventHoleList,
-			levelTime,
-			componentRef.current,
-			holeSetTimeoutRef.current,
-			handleHoleSettimeout
-		);
-	}, [mole, holes, levelTime]);
-
-	const { time, start, end, pouse } = useTimer(60, levelTime, visibleRendomHoleList);
-
-	const onClickStart = React.useCallback(() => {
-		start();
-		setStartGame(true);
-	}, [start]);
-
-	const onClickPouse = React.useCallback(() => {
-		pouse();
-		setParseGame(true);
-	}, [pouse]);
-
-	const onClickStop = React.useCallback(() => {
-		end();
-		setParseGame(false);
-		setStartGame(false);
-		clearPlayState();
-		navigate(AppPaths.ready.path);
-	}, [end, navigate, clearPlayState]);
-
-	const onClickRestart = React.useCallback(() => {
-		start();
-		setParseGame(false);
-	}, [start]);
-
-	const clearTimeOut = (type: ClearType) => {
-		const timeOutCurrent = holeSetTimeoutRef.current;
-		const moleHoleSelect = componentRef?.current?.querySelectorAll('button');
-
-		if (type === 'button') {
-			timeOutCurrent.forEach((item, index) => {
-				const html = moleHoleSelect?.[index];
-				Object.keys(item).forEach(key => {
-					if (typeof item[key] !== 'number' && html?.classList.contains('active')) {
-						clearTimeout(item[key]);
-					}
-				});
-			});
-		} else {
-			timeOutCurrent.forEach(item => {
-				Object.keys(item).forEach(key => {
-					if (typeof item[key] !== 'number') {
-						clearTimeout(item[key]);
-					}
-				});
-			});
-			holeSetTimeoutRef.current = [];
-		}
-	};
-
-	const handleButtonElement = React.useCallback(
-		(buttonRef: HTMLButtonElement | null) => {
-			const buttonElementIndex = buttonRef?.id.replace('hole-button-', '');
-			const moleElement = buttonRef?.querySelector(`#mole-${buttonElementIndex}`);
-			const bombElement = buttonRef?.querySelector(`#bomb-${buttonElementIndex}`);
-
-			if (buttonRef !== undefined && buttonRef !== null) {
-				buttonRef.classList.add('active');
-				if (!moleElement?.classList.contains('hidden')) {
-					handleIncreaseScore();
-					moleElement?.classList.add('hidden');
-				}
-				if (!bombElement?.classList.contains('hidden')) {
-					handleDecreaseScore();
-					bombElement?.classList.add('hidden');
-				}
-				buttonRef.setAttribute('disabled', '');
-			}
-			clearTimeOut('button');
-		},
-		[handleDecreaseScore, handleIncreaseScore]
-	);
-
-	React.useEffect(() => {
-		if (time === 0) {
-			clearTimeOut('all');
-			end();
-			navigate(AppPaths.result.path);
-		}
-		switch (time) {
-			case 45:
-				setLevelTime(1250);
-				break;
-
-			case 30:
-				setLevelTime(1000);
-				break;
-
-			case 15:
-				setLevelTime(500);
-				break;
-
-			default:
-				break;
-		}
-	}, [time, end, navigate]);
+		onClickStart,
+		onClickPouse,
+		onClickRestart,
+		onClickStop
+	} = usePlay();
 
 	return (
 		<main>
