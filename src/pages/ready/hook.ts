@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import useLessThenHalf from 'hooks/less-than-half';
+import useLessThenHalf from 'hooks/useLessThenHalf';
 
 import { UseReadyStore } from 'stores/ready';
 import { AppPaths } from 'constants/app-paths';

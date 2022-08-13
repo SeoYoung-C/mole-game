@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-interface UseLessThenHalfProps {
+export interface UseLessThenHalfProps {
 	row: number;
 	col: number;
 }
