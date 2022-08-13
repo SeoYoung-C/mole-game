@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Icon from 'assets/svgs';
+import Icon from 'assets/icons';
 import { Button } from 'components';
 import usePlay from './hook';
 
@@ -16,7 +16,7 @@ function Play() {
 	const {
 		time,
 		score,
-		componentRef,
+		gameContentAreaRef,
 		col,
 		holes,
 		startGame,
@@ -36,7 +36,7 @@ function Play() {
 				<span className="time">남은시간 : {time}</span>
 				<span className="score">점수 : {score}</span>
 			</section>
-			<table ref={componentRef} className="play__content">
+			<table ref={gameContentAreaRef} className="play__content">
 				<colgroup>{ReturnColGroup(col)}</colgroup>
 				<tbody>
 					{holes.map((row, index) => (

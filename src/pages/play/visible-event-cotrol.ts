@@ -1,5 +1,7 @@
-import { MOLE_PERCENT, BOM_PERVENT } from './constants';
 import { SetTimeoutRefType } from './interface';
+
+export const MOLE_PERCENT = 0.3;
+export const BOM_PERVENT = 0.5;
 
 const mutateTimeout = (button: Element, classList: DOMTokenList) => {
 	classList.add('hidden');
@@ -21,6 +23,7 @@ const hiddenHoleControl = (index: number, button: Element, mole: Element, bomb: 
 		mutateTimeIn(button, mole.classList);
 		return newMole;
 	}
+
 	if (MOLE_PERCENT < randomValue && randomValue < BOM_PERVENT) {
 		const newBomb = {
 			[index]: setTimeout(() => mutateTimeout(button, bomb.classList), levelTime)
@@ -41,7 +44,7 @@ export const visibleEventControl = (
 ) => {
 	const holeButtonList = componentRef?.querySelectorAll('button');
 
-	if (holeButtonList !== undefined) {
+	if (holeButtonList) {
 		const timeOutList = holeIndexList.map((item, index) => {
 			const buttonElement = holeButtonList[item];
 			const buttonElementIndex = holeButtonList[item]?.id.replace('hole-button-', '');

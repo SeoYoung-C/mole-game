@@ -1,7 +1,14 @@
 import React from 'react';
 
 function Loading() {
-	return <>Loading</>;
+	return (
+		<section className="loading-wrap">
+			<div className="loading-container">
+				<div className="loading" />
+				<div className="loading-text">loading</div>
+			</div>
+		</section>
+	);
 }
 
 export default Loading;

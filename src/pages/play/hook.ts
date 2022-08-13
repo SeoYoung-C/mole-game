@@ -13,7 +13,7 @@ import { ClearType, SetTimeoutRefType } from './interface';
 const usePlay = () => {
 	const navigate = useNavigate();
 
-	const componentRef = useRef<HTMLTableElement>(null);
+	const gameContentAreaRef = useRef<HTMLTableElement>(null);
 	const holeSetTimeoutRef = useRef<SetTimeoutRefType>([]);
 
 	const { col, holes, mole } = UseReadyStore();
@@ -36,14 +36,13 @@ const usePlay = () => {
 		visibleEventControl(
 			eventHoleList,
 			levelTime,
-			componentRef.current,
+			gameContentAreaRef.current,
 			holeSetTimeoutRef.current,
 			handleHoleSettimeout
 		);
 	}, [mole, holes, levelTime]);
 
 	const { time, start, end, pouse } = useTimer(60, levelTime, visibleRendomHoleList);
-
 	const [startGame, setStartGame] = useState<boolean>(false);
 	const onClickStart = useCallback(() => {
 		start();
@@ -58,9 +57,9 @@ const usePlay = () => {
 
 	const onClickStop = useCallback(() => {
 		end();
+		clearPlayState();
 		setParseGame(false);
 		setStartGame(false);
-		clearPlayState();
 		navigate(AppPaths.ready.path);
 	}, [end, navigate, clearPlayState]);
 
@@ -71,7 +70,7 @@ const usePlay = () => {
 
 	const clearTimeOut = (type: ClearType) => {
 		const timeOutCurrent = holeSetTimeoutRef.current;
-		const moleHoleSelect = componentRef?.current?.querySelectorAll('button');
+		const moleHoleSelect = gameContentAreaRef?.current?.querySelectorAll('button');
 
 		if (type === 'button') {
 			timeOutCurrent.forEach((item, index) => {
@@ -144,7 +143,7 @@ const usePlay = () => {
 	return {
 		time,
 		score,
-		componentRef,
+		gameContentAreaRef,
 		col,
 		holes,
 		startGame,
