@@ -1,12 +1,12 @@
 import { MOLE_PERCENT, BOM_PERVENT } from './constants';
-import { SetTimeoutRefType, TimeoutRefObject } from './interface';
+import { SetTimeoutRefType } from './interface';
 
-const mutateTimeout = (button: Element, classList: DOMTokenList): void => {
+const mutateTimeout = (button: Element, classList: DOMTokenList) => {
 	classList.add('hidden');
 	button.setAttribute('disabled', '');
 };
 
-const mutateTimeIn = (button: Element, classList: DOMTokenList): void => {
+const mutateTimeIn = (button: Element, classList: DOMTokenList) => {
 	classList.remove('hidden');
 	button.removeAttribute('disabled');
 };
@@ -37,7 +37,7 @@ export const visibleEventControl = (
 	componentRef: HTMLTableElement | null,
 	holeSettimeoutRef: SetTimeoutRefType,
 	handleHoleSettimeout: (props: SetTimeoutRefType) => void
-): void => {
+) => {
 	const holeButtonList = componentRef?.querySelectorAll('button');
 
 	if (holeButtonList !== undefined) {

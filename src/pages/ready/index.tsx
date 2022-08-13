@@ -16,16 +16,8 @@ function Ready() {
 	const maxMole = useLessThenHalf({ row, col });
 
 	const onClickStart = React.useCallback(() => {
-		const arr = Array.from({ length: row * col }, () => 0);
-		const { length } = arr;
-		const divide = Math.floor(length / col) + (Math.floor(length % col) > 0 ? 1 : 0);
-		const newArray = [];
-		for (let i = 1; i <= divide; i += 1) {
-			newArray.push(arr.splice(0, col));
-		}
-
+		const newArray = Array.from(Array(row), () => Array(col).fill(0));
 		handleHolesState(newArray);
-
 		navigate(AppPaths.play.path);
 	}, [navigate, handleHolesState, row, col]);
 

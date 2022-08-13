@@ -6,8 +6,8 @@ export const INITIAL_STATE: ReadyState = {
 	col: 2,
 	mole: 1,
 	holes: [
-		[0, 1],
-		[2, 3]
+		[0, 0],
+		[0, 0]
 	]
 };
 
