@@ -8,6 +8,7 @@ import { getCookie, setCookie } from 'utils/cookie';
 import { AppPaths } from 'constants/app-paths';
 
 import { Ranks } from 'pages/ranking/interface';
+import { formatDate } from '../../utils/format-date';
 
 const useResult = () => {
 	const navigate = useNavigate();
@@ -29,26 +30,34 @@ const useResult = () => {
 	}, [clearPlayState, navigate]);
 
 	useEffect(() => {
-		if (score !== 0) {
+		if (score > 0) {
 			const ranking = getCookie('ranking');
-			const rankList: Ranks[] = JSON.parse(ranking ?? '[]');
-			rankList.push({ score, date: new Date().toISOString() });
-			rankList.sort((a, b) => {
-				const rules = b.score - b.score;
-				if (rules > 0) {
-					return 1;
-				}
-				if (rules === 0) {
-					return new Date(b.date).getTime() - new Date(a.date).getTime();
-				}
-				return -1;
-			});
+			const parseRanking: Ranks[] = JSON.parse(ranking ?? '[]');
+			parseRanking.push({ score, date: new Date().toISOString() });
 
-			const newArray = [...new Set(rankList)];
+			const rankList = parseRanking
+				.reduce((acc: Ranks[], cur) => {
+					if (
+						acc.findIndex(
+							({ date }) => formatDate(date, 'YYYYMMDDHHmmss') === formatDate(cur.date, 'YYYYMMDDHHmmss')
+						) === -1
+					) {
+						acc.push(cur);
+					}
+					return acc;
+				}, [])
+				.sort((a, b) => {
+					const rules = b.score - a.score;
+					if (rules > 0) {
+						return 1;
+					}
+					if (rules === 0) {
+						return new Date(b.date).getTime() - new Date(a.date).getTime();
+					}
+					return -1;
+				})
+				.slice(0, 10);
 
-			if ([...newArray].length > 10) {
-				rankList.slice(0, 11);
-			}
 			setCookie('ranking', JSON.stringify(rankList), 30);
 		}
 	}, [score]);
