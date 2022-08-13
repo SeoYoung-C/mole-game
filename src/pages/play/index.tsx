@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Icon from 'assets/svgs';
 import { Button } from 'components';
@@ -8,6 +9,7 @@ import { UsePlayStore } from 'stores/play';
 
 import useTimer from 'hooks/useTimer';
 
+import { AppPaths } from 'constants/app-paths';
 import { visibleEventControl } from './visible-event-cotrol';
 import { ClearType, SetTimeoutRefType } from './interface';
 
@@ -20,11 +22,13 @@ const ReturnColGroup = (col: number) => {
 };
 
 function Play() {
+	const navigate = useNavigate();
+
 	const componentRef = React.useRef<HTMLTableElement>(null);
 	const holeSetTimeoutRef = React.useRef<SetTimeoutRefType>([]);
 
 	const { col, holes, mole } = UseReadyStore();
-	const { handleDecreaseScore, handleIncreaseScore } = UsePlayStore();
+	const { score, handleDecreaseScore, handleIncreaseScore, clearPlayState } = UsePlayStore();
 
 	const [startGame, setStartGame] = React.useState<boolean>(false);
 	const [parseGame, setParseGame] = React.useState<boolean>(false);
@@ -69,7 +73,9 @@ function Play() {
 		end();
 		setParseGame(false);
 		setStartGame(false);
-	}, [end]);
+		clearPlayState();
+		navigate(AppPaths.ready.path);
+	}, [end, navigate, clearPlayState]);
 
 	const onClickRestart = React.useCallback(() => {
 		start();
@@ -128,6 +134,7 @@ function Play() {
 		if (time === 0) {
 			clearTimeOut('all');
 			end();
+			navigate(AppPaths.result.path);
 		}
 		switch (time) {
 			case 45:
@@ -145,10 +152,14 @@ function Play() {
 			default:
 				break;
 		}
-	}, [time, end]);
+	}, [time, end, navigate]);
 
 	return (
 		<main>
+			<section>
+				<div className="play-content__left">남은시간: {time}</div>
+				<div className="play-content__right">점수: {score}</div>
+			</section>
 			<table ref={componentRef}>
 				<colgroup>{ReturnColGroup(col)}</colgroup>
 				<tbody>
@@ -169,8 +180,8 @@ function Play() {
 											className="mole hidden"
 										/>
 										<Icon id={`bomb-${index}-${colIndex}`} name="bomb" className="bomb hidden" />
-										{/* <Icon name="holeWave" className="front" />
-										<Icon name="holeBottom" className="bottom" /> */}
+										<Icon name="holeWave" className="front" />
+										<Icon name="holeBottom" className="bottom" />
 									</Button>
 								</td>
 							))}

@@ -12,7 +12,7 @@ export const UsePlayStore = () => {
 		mustateScoreDecreaseState();
 	}, [mustateScoreDecreaseState]);
 
-	const clearReadyState = useCallback(() => {
+	const clearPlayState = useCallback(() => {
 		mutateClearState();
 	}, [mutateClearState]);
 
@@ -20,6 +20,6 @@ export const UsePlayStore = () => {
 		score,
 		handleIncreaseScore,
 		handleDecreaseScore,
-		clearReadyState
+		clearPlayState
 	};
 };

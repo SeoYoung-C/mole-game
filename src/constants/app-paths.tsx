@@ -1,9 +1,10 @@
-import React from 'react';
-import { lazy } from 'react';
+import React, { lazy } from 'react';
 
 import Ready from 'pages/ready';
+
 const Play = lazy(() => import('../pages/play'));
 const Result = lazy(() => import('../pages/result'));
+const Ranking = lazy(() => import('../pages/ranking'));
 
 export interface Path {
 	path: string;
@@ -12,7 +13,7 @@ export interface Path {
 	element: JSX.Element;
 }
 
-export type AppPathKey = 'ready' | 'play' | 'result';
+export type AppPathKey = 'ready' | 'play' | 'result' | 'ranking';
 
 export type AppPath = {
 	[key in AppPathKey]: Path;
@@ -39,8 +40,16 @@ const result = Object.freeze<Path>({
 	element: <Result />
 });
 
+const ranking = Object.freeze<Path>({
+	path: '/ranking',
+	key: 'ranking',
+	label: '게임 순위',
+	element: <Ranking />
+});
+
 export const AppPaths: AppPath = {
 	ready,
 	play,
-	result
+	result,
+	ranking
 };

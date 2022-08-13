@@ -21,6 +21,10 @@ function Ready() {
 		navigate(AppPaths.play.path);
 	}, [navigate, handleHolesState, row, col]);
 
+	const onClickRanking = React.useCallback(() => {
+		navigate(AppPaths.ranking.path);
+	}, [navigate]);
+
 	const handleChangeRow = React.useCallback(
 		(value: number) => {
 			handleRowState(value);
@@ -74,6 +78,7 @@ function Ready() {
 			<Button className="ready__content__button" onClick={onClickStart}>
 				시작
 			</Button>
+			<Button onClick={onClickRanking}>랭킹</Button>
 		</section>
 	);
 }

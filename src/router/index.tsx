@@ -15,6 +15,7 @@ function Router() {
 					<Route path={AppPaths.ready.path} key={AppPaths.ready.key} element={AppPaths.ready.element} />
 					<Route path={AppPaths.play.path} key={AppPaths.play.key} element={AppPaths.play.element} />
 					<Route path={AppPaths.result.path} key={AppPaths.result.key} element={AppPaths.result.element} />
+					<Route path={AppPaths.ranking.path} key={AppPaths.ranking.key} element={AppPaths.ranking.element} />
 				</Routes>
 			</Suspense>
 		</HashRouter>

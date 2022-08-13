@@ -28,6 +28,7 @@ const hiddenHoleControl = (index: number, button: Element, mole: Element, bomb: 
 		mutateTimeIn(button, bomb.classList);
 		return newBomb;
 	}
+
 	return { [index]: 0 };
 };
 
