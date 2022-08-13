@@ -24,5 +24,6 @@ function Button(props: ButtonProps) {
 		</button>
 	);
 }
+Button.displayName = 'Button';
 
 export default Button;

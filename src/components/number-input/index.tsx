@@ -13,4 +13,6 @@ function NumberInput(props: NumberInputProps) {
 	return <input type="number" onChange={handleChangeInput} {...left} />;
 }
 
+NumberInput.displayName = 'NumberInput';
+
 export default NumberInput;

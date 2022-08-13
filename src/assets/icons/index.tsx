@@ -7,7 +7,7 @@ import { ReactComponent as HoleWave } from './svgs/hole-wave.svg';
 
 import { IconProps, Icons } from './interface';
 
-const Icon = (props: IconProps) => {
+function Icon(props: IconProps) {
 	const { name, ...left } = props;
 
 	const ICONS: Icons = {
@@ -29,7 +29,7 @@ const Icon = (props: IconProps) => {
 	};
 
 	return getIcon(name);
-};
+}
 
 export default Icon;
 
