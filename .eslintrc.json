@@ -28,7 +28,7 @@
     ],
 	"settings": {
 		"import/resolver": {
-			"node": { "extensions": [".js", ".jsx", ".ts", ".tsx", ".scss"] }
+			"node": { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
 		}
 	},
     "rules": {
@@ -36,7 +36,7 @@
 		"import/no-unresolved": "off",
         "import/prefer-default-export": "off",
         "import/extensions": ["off"],
-        "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx", ".scss"] }],
+        "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
         "react/jsx-props-no-spreading": [2, {
             "exceptions": ["input", "button", "Bomb", "Mole", "HoleBottom", "HoleWave" ]
         }],

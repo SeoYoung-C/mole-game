@@ -29,9 +29,9 @@ const useResult = () => {
 	}, [clearPlayState, navigate]);
 
 	useEffect(() => {
-		const ranking = getCookie('ranking');
-		if (ranking && score !== 0) {
-			const rankList: Ranks[] = JSON.parse(ranking);
+		if (score !== 0) {
+			const ranking = getCookie('ranking');
+			const rankList: Ranks[] = JSON.parse(ranking ?? '[]');
 			rankList.push({ score, date: new Date().toISOString() });
 			rankList.sort((a, b) => {
 				const rules = b.score - b.score;
@@ -43,7 +43,10 @@ const useResult = () => {
 				}
 				return -1;
 			});
-			if (rankList.length > 10) {
+
+			const newArray = [...new Set(rankList)];
+
+			if ([...newArray].length > 10) {
 				rankList.slice(0, 11);
 			}
 			setCookie('ranking', JSON.stringify(rankList), 30);

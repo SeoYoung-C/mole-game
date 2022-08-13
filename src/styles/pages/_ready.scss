@@ -1,0 +1,30 @@
+.ready {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  &__title {
+    color: $brown;
+    font-size: 3rem;
+  }
+
+  &__table {
+    min-width: 164px;
+    width: 10vw;
+    .left-text {
+      color: $brown;
+      font-size: 1rem;
+      font-weight: 800;
+      text-align: center;
+    }
+    .right {
+      text-align: right;
+    }
+  }
+  &__button-wrap {
+    display: flex;
+    gap: 8px;
+    margin-top: 2vh;
+  }
+}

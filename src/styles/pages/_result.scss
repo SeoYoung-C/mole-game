@@ -1,0 +1,39 @@
+.result {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+
+  & > h1 {
+    align-items: center;
+    color: $brown;
+    display: flex;
+    flex-direction: column;
+    font-size: 2rem;
+    height: 6rem;
+    justify-content: center;
+    margin: 0;
+    span {
+      display: block;
+      font-size: 3rem;
+      font-weight: 800;
+    }
+  }
+
+  &__button-wrap {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    & > div {
+      display: flex;
+      gap: 8px;
+    }
+
+    .ranking-button {
+      width: 200px;
+    }
+  }
+}

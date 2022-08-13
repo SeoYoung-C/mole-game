@@ -31,12 +31,12 @@ function Play() {
 	} = usePlay();
 
 	return (
-		<main>
-			<section>
-				<div className="play-content__left">남은시간: {time}</div>
-				<div className="play-content__right">점수: {score}</div>
+		<main className="play">
+			<section className="play__header">
+				<span className="time">남은시간 : {time}</span>
+				<span className="score">점수 : {score}</span>
 			</section>
-			<table ref={componentRef}>
+			<table ref={componentRef} className="play__content">
 				<colgroup>{ReturnColGroup(col)}</colgroup>
 				<tbody>
 					{holes.map((row, index) => (
@@ -47,7 +47,7 @@ function Play() {
 										id={`hole-button-${index}-${colIndex}`}
 										className="hole-button"
 										handleButtonElement={handleButtonElement}
-										style={{ width: '80px', height: '80px' }}>
+										disabled={!startGame || parseGame}>
 										<Icon
 											id={`mole-${index}-${colIndex}`}
 											name="mole"
@@ -65,18 +65,28 @@ function Play() {
 					))}
 				</tbody>
 			</table>
-			{startGame === false ? (
-				<Button onClick={onClickStart}>시작하기</Button>
-			) : (
-				<>
-					{parseGame === false ? (
-						<Button onClick={onClickPouse}>잠시 멈춤</Button>
-					) : (
-						<Button onClick={onClickRestart}>재개하기</Button>
-					)}
-					<Button onClick={onClickStop}>그만 하기</Button>
-				</>
-			)}
+			<section className="play__button-wrap">
+				{startGame === false ? (
+					<Button onClick={onClickStart} className="play__button-wrap__start">
+						시작하기
+					</Button>
+				) : (
+					<>
+						{parseGame === false ? (
+							<Button onClick={onClickPouse} className="play__button-wrap__pouse">
+								잠시 멈춤
+							</Button>
+						) : (
+							<Button onClick={onClickRestart} className="play__button-wrap__restart">
+								재개하기
+							</Button>
+						)}
+						<Button onClick={onClickStop} className="play__button-wrap__stop">
+							그만 하기
+						</Button>
+					</>
+				)}
+			</section>
 		</main>
 	);
 }

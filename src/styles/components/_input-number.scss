@@ -1,0 +1,26 @@
+input[type="number"] {
+  background: $beige;
+  border: 1px solid $brown;
+  height: 2rem;
+  width: 4vw;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    appearance: none;
+    background: #fff url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAKUlEQVQYlWNgwAT/sYhhKPiPT+F/LJgEsHv37v+EMGkmkuImoh2NoQAANlcun/q4OoYAAAAASUVORK5CYII=") no-repeat center;
+    border-left: 1px solid $brown;
+    bottom: 0;
+    opacity: 0.5;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 2em;
+  }
+  &:hover, &:focus, &:active {
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      appearance: none;
+      box-shadow: 0 0 2px $brown;
+      opacity: 0.8;
+    }
+  }
+}

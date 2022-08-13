@@ -1,0 +1,12 @@
+/** Comm */
+@import "./variables";
+@import "./comm";
+
+/** Components */
+@import "./components/input-number";
+@import "./components/button";
+
+/** Pages */
+@import "./pages/ready";
+@import "./pages/play";
+@import "./pages/result"

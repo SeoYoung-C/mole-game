@@ -1,0 +1,117 @@
+.play {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+
+  &__header {
+    display: flex;
+    height: 2rem;
+    justify-content: center;
+    width: 80vw;
+
+    .time {
+      color: $black;
+      font-size: 2rem;
+      font-weight: bold;
+      height: fit-content;
+      text-align: center;
+      width: 50%;
+    }
+    .score {
+      color: $black;
+      font-size: 2rem;
+      font-weight: bold;
+      height: fit-content;
+      text-align: center;
+      width: 50%;
+    }
+  }
+
+  &__content {
+    height: 70vh;
+    width: 70vh;
+
+    .hole {
+      overflow: hidden;
+      .hole-button {
+        background: transparent !important;
+        border: none !important;
+        height: calc(100% - 4vh);
+        margin-top: 1vw;
+        padding: 0 !important;
+        position: relative;
+        width: calc(100% - 4vh);
+
+        .mole {
+          bottom: 0;
+          height: 100%;
+          left: 0;
+          position: absolute;
+          transition: bottom 1s;
+          width: 100%;
+          z-index: 1;
+        }
+
+        .bomb {
+          bottom: 0;
+          height: 100%;
+          left: 0.5vw;
+          position: absolute;
+          transition: bottom 1s;
+          width: 100%;
+          z-index: 1;
+        }
+
+        .front {
+          bottom: -40%;
+          height: 100%;
+          left: 0;
+          position: absolute;
+          width: 100%;
+          z-index: 2;
+        }
+        .bottom {
+          bottom: -100%;
+          fill: #4d2c23;
+          height: 100%;
+          left: 0;
+          position: absolute;
+          width: 100%;
+          z-index: 2;
+        }
+        .hidden {
+          bottom: -100%;
+        }
+      }
+    }
+  }
+
+  &__button-wrap {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    margin-top: 5vh;
+
+    &__start {
+      font-weight: bold;
+      height: 3rem;
+    }
+    &__pouse {
+      font-weight: bold;
+      height: 3rem;
+      margin-right: 0.5vw;
+    }
+    &__restart {
+      font-weight: bold;
+      height: 3rem;
+      margin-left: 0.5vw;
+    }
+    &__stop {
+      font-weight: bold;
+      height: 3rem;
+    }
+  }
+}
