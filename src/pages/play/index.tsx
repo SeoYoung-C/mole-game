@@ -4,6 +4,7 @@ import Icon from 'assets/svgs';
 import { Button } from 'components';
 
 import { UseReadyStore } from 'stores/ready';
+import { UsePlayStore } from 'stores/play';
 
 import useTimer from 'hooks/useTimer';
 
@@ -23,12 +24,17 @@ function Play() {
 	const holeSetTimeoutRef = React.useRef<SetTimeoutRefType>([]);
 
 	const { col, holes, mole } = UseReadyStore();
+	const { handleDecreaseScore, handleIncreaseScore } = UsePlayStore();
 
 	const [startGame, setStartGame] = React.useState<boolean>(false);
 	const [parseGame, setParseGame] = React.useState<boolean>(false);
 	const [levelTime, setLevelTime] = React.useState<number>(1500);
 
-	const visibleRendomHoleList = (): void => {
+	const handleHoleSettimeout = (data: SetTimeoutRefType) => {
+		holeSetTimeoutRef.current = data;
+	};
+
+	const visibleRendomHoleList = React.useCallback((): void => {
 		const showMoleList = holes.flat();
 		const eventHoleList = showMoleList.slice();
 		let moleNumber = 0;
@@ -38,8 +44,14 @@ function Play() {
 			moleNumber += 1;
 		}
 
-		visibleEventControl(eventHoleList, levelTime, componentRef.current, holeSetTimeoutRef.current);
-	};
+		visibleEventControl(
+			eventHoleList,
+			levelTime,
+			componentRef.current,
+			holeSetTimeoutRef.current,
+			handleHoleSettimeout
+		);
+	}, [mole, holes, levelTime]);
 
 	const { time, start, end, pouse } = useTimer(60, levelTime, visibleRendomHoleList);
 
@@ -71,43 +83,46 @@ function Play() {
 		if (type === 'button') {
 			timeOutCurrent.forEach((item, index) => {
 				const html = moleHoleSelect?.[index];
-				for (const [_, value] of Object.entries(item)) {
-					if (typeof value !== 'number' && html?.classList.contains('active')) {
-						clearTimeout(value);
+				Object.keys(item).forEach(key => {
+					if (typeof item[key] !== 'number' && html?.classList.contains('active')) {
+						clearTimeout(item[key]);
 					}
-				}
+				});
 			});
 		} else {
 			timeOutCurrent.forEach(item => {
-				for (const [, value] of Object.entries(item)) {
-					if (typeof value !== 'number') {
-						clearTimeout(value);
+				Object.keys(item).forEach(key => {
+					if (typeof item[key] !== 'number') {
+						clearTimeout(item[key]);
 					}
-				}
+				});
 			});
 			holeSetTimeoutRef.current = [];
 		}
 	};
 
-	const handleButtonElement = React.useCallback((buttonRef: HTMLButtonElement | null) => {
-		const buttonElementIndex = buttonRef?.id.replace('hole-button-', '');
-		const mole = buttonRef?.querySelector(`#mole-${buttonElementIndex}`);
-		const bomb = buttonRef?.querySelector(`#bomb-${buttonElementIndex}`);
-		console.log(buttonRef);
-		if (buttonRef !== undefined && buttonRef !== null) {
-			buttonRef.classList.add('active');
-			if (!mole?.classList.contains('hidden')) {
-				// 'plus';
-				mole?.classList.add('hidden');
+	const handleButtonElement = React.useCallback(
+		(buttonRef: HTMLButtonElement | null) => {
+			const buttonElementIndex = buttonRef?.id.replace('hole-button-', '');
+			const moleElement = buttonRef?.querySelector(`#mole-${buttonElementIndex}`);
+			const bombElement = buttonRef?.querySelector(`#bomb-${buttonElementIndex}`);
+
+			if (buttonRef !== undefined && buttonRef !== null) {
+				buttonRef.classList.add('active');
+				if (!moleElement?.classList.contains('hidden')) {
+					handleIncreaseScore();
+					moleElement?.classList.add('hidden');
+				}
+				if (!bombElement?.classList.contains('hidden')) {
+					handleDecreaseScore();
+					bombElement?.classList.add('hidden');
+				}
+				buttonRef.setAttribute('disabled', '');
 			}
-			if (!bomb?.classList.contains('hidden')) {
-				// 'minus;
-				bomb?.classList.add('hidden');
-			}
-			buttonRef.setAttribute('disabled', '');
-		}
-		clearTimeOut('button');
-	}, []);
+			clearTimeOut('button');
+		},
+		[handleDecreaseScore, handleIncreaseScore]
+	);
 
 	React.useEffect(() => {
 		if (time === 0) {
@@ -130,7 +145,7 @@ function Play() {
 			default:
 				break;
 		}
-	}, [time]);
+	}, [time, end]);
 
 	return (
 		<main>
@@ -138,9 +153,9 @@ function Play() {
 				<colgroup>{ReturnColGroup(col)}</colgroup>
 				<tbody>
 					{holes.map((row, index) => (
-						<tr key={`row-${index}`}>
+						<tr key={`row-${index.toString()}`}>
 							{row.map((_, colIndex) => (
-								<td className="hole" key={`hole-${index}-${colIndex}`}>
+								<td className="hole" key={`hole-${index.toString()}-${colIndex.toString()}`}>
 									<Button
 										id={`hole-button-${index}-${colIndex}`}
 										className="hole-button"

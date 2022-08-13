@@ -5,7 +5,7 @@ import { Loading, ScrollToTop } from 'components';
 
 import { AppPaths } from 'constants/app-paths';
 
-const Router = () => {
+function Router() {
 	return (
 		<HashRouter>
 			<ScrollToTop />
@@ -19,6 +19,6 @@ const Router = () => {
 			</Suspense>
 		</HashRouter>
 	);
-};
+}
 
 export default Router;

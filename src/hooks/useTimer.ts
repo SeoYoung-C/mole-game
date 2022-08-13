@@ -15,15 +15,13 @@ const useTimer = (initial: number, ms: number, callBackFunc?: () => void): UseTi
 
 	const start = useCallback(() => {
 		if (intervalRef.current !== null) {
-			console.log('current-null');
-
 			return;
 		}
 		intervalRef.current = setInterval(() => {
 			callBackFunc?.();
 			setTime(prev => prev - 1);
 		}, ms);
-	}, []);
+	}, [callBackFunc, ms]);
 
 	const end = useCallback(() => {
 		if (intervalRef.current === null) {
@@ -32,7 +30,7 @@ const useTimer = (initial: number, ms: number, callBackFunc?: () => void): UseTi
 		clearInterval(intervalRef.current);
 		intervalRef.current = null;
 		setTime(initial);
-	}, []);
+	}, [initial]);
 
 	const pouse = useCallback(() => {
 		if (intervalRef.current === null) {
@@ -46,7 +44,7 @@ const useTimer = (initial: number, ms: number, callBackFunc?: () => void): UseTi
 		return () => {
 			end();
 		};
-	}, []);
+	}, [end]);
 
 	return { time, start, end, pouse };
 };

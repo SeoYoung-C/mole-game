@@ -1,4 +1,4 @@
-interface TimeoutRefObject {
+export interface TimeoutRefObject {
 	[key: string]: NodeJS.Timeout | number;
 }
 

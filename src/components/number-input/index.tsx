@@ -1,7 +1,7 @@
 import React from 'react';
 import { NumberInputProps } from './interface';
 
-const NumberInput = (props: NumberInputProps) => {
+function NumberInput(props: NumberInputProps) {
 	const { onChange, ...left } = props;
 
 	const handleChangeInput = (e: React.FormEvent<HTMLInputElement>) => {
@@ -11,6 +11,6 @@ const NumberInput = (props: NumberInputProps) => {
 	};
 
 	return <input type="number" onChange={handleChangeInput} {...left} />;
-};
+}
 
 export default NumberInput;
