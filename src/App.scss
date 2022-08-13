@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+.mole {
+  display: block;
+}
+
+.mole.hidden {
+  display: none;
+}
+
+.bomb {
+  display: block;
+}
+
+.bomb.hidden {
+  display: none;
+}
+
+

@@ -5,6 +5,9 @@
         "jest": true
     },
     "extends": [
+		"airbnb",
+		"airbnb/hooks",
+		"prettier",
         "eslint:recommended",
         "plugin:react/recommended",
         "plugin:@typescript-eslint/recommended",
@@ -20,8 +23,19 @@
     },
     "plugins": [
         "react",
+        "react-hooks",
         "@typescript-eslint"
     ],
+	"settings": {
+		"import/resolver": {
+			"node": { "extensions": [".js", ".jsx", ".ts", ".tsx", ".scss"] }
+		}
+	},
     "rules": {
+		"no-unused-vars": "off",
+		"import/no-unresolved": "off",
+        "import/prefer-default-export": "off",
+        "import/extensions": ["off"],
+        "react/jsx-filename-extension": [4, { "extensions": [".js", ".jsx", ".ts", ".tsx", ".scss"] }]
     }
 }

@@ -1,32 +1,47 @@
-import React from 'react';
-import { useStore } from 'stores';
+import { useCallback } from 'react';
+import useStore from 'stores';
 
 export const UseReadyStore = () => {
-	const { row, col, mole, mutateRowState, mutateColState, mutateMoleState, mutateClearState } = useStore(
-		state => state
-	);
+	const {
+		row,
+		col,
+		mole,
+		holes,
+		mutateRowState,
+		mutateColState,
+		mutateMoleState,
+		mutateHolesState,
+		mutateClearState
+	} = useStore(state => state);
 
-	const handleRowState = React.useCallback(
-		(row: number) => {
-			mutateRowState(row);
+	const handleRowState = useCallback(
+		(rowState: number) => {
+			mutateRowState(rowState);
 		},
 		[mutateRowState]
 	);
-	const handleColState = React.useCallback(
-		(col: number) => {
-			mutateColState(col);
+	const handleColState = useCallback(
+		(colState: number) => {
+			mutateColState(colState);
 		},
 		[mutateColState]
 	);
 
-	const handleMoleState = React.useCallback(
-		(mole: number) => {
-			mutateMoleState(mole);
+	const handleMoleState = useCallback(
+		(moleState: number) => {
+			mutateMoleState(moleState);
 		},
 		[mutateMoleState]
 	);
 
-	const clearReadyState = React.useCallback(() => {
+	const handleHolesState = useCallback(
+		(holesState: number[][]) => {
+			mutateHolesState(holesState);
+		},
+		[mutateHolesState]
+	);
+
+	const clearReadyState = useCallback(() => {
 		mutateClearState();
 	}, [mutateClearState]);
 
@@ -34,9 +49,11 @@ export const UseReadyStore = () => {
 		row,
 		col,
 		mole,
+		holes,
 		handleRowState,
 		handleColState,
 		handleMoleState,
+		handleHolesState,
 		clearReadyState
 	};
 };

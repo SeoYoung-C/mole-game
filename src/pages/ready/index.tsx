@@ -9,15 +9,25 @@ import useLessThenHalf from 'hooks/less-than-half';
 import { UseReadyStore } from 'stores/ready';
 import { AppPaths } from 'constants/app-paths';
 
-const Ready = () => {
+function Ready() {
 	const navigate = useNavigate();
 
-	const { row, col, mole, handleRowState, handleColState, handleMoleState } = UseReadyStore();
+	const { row, col, mole, handleRowState, handleColState, handleMoleState, handleHolesState } = UseReadyStore();
 	const maxMole = useLessThenHalf({ row, col });
 
 	const onClickStart = React.useCallback(() => {
+		const arr = Array.from({ length: row * col }, () => 0);
+		const { length } = arr;
+		const divide = Math.floor(length / col) + (Math.floor(length % col) > 0 ? 1 : 0);
+		const newArray = [];
+		for (let i = 1; i <= divide; i += 1) {
+			newArray.push(arr.splice(0, col));
+		}
+
+		handleHolesState(newArray);
+
 		navigate(AppPaths.play.path);
-	}, [navigate]);
+	}, [navigate, handleHolesState, row, col]);
 
 	const handleChangeRow = React.useCallback(
 		(value: number) => {
@@ -74,6 +84,6 @@ const Ready = () => {
 			</Button>
 		</section>
 	);
-};
+}
 
 export default Ready;

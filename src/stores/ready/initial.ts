@@ -4,7 +4,11 @@ import { ReadyState, ReadyStateStore } from './interface';
 export const INITIAL_STATE: ReadyState = {
 	row: 2,
 	col: 2,
-	mole: 1
+	mole: 1,
+	holes: [
+		[0, 1],
+		[2, 3]
+	]
 };
 
 export const ReadyStore: StateCreator<ReadyStateStore> = set => ({
@@ -20,6 +24,10 @@ export const ReadyStore: StateCreator<ReadyStateStore> = set => ({
 
 	mutateMoleState: (mole: number) => {
 		set(() => ({ mole }));
+	},
+
+	mutateHolesState: (holes: number[][]) => {
+		set(() => ({ holes }));
 	},
 
 	mutateClearState: () => {

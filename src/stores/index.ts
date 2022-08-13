@@ -6,7 +6,7 @@ import type { ReadyStateStore } from './ready/interface';
 
 type Store = ReadyStateStore;
 
-export const useStore = create<Store>(
+const useStore = create<Store>(
 	devtools(
 		persist(
 			(set, get, api) => ({
@@ -22,3 +22,5 @@ export const useStore = create<Store>(
 		)
 	)
 );
+
+export default useStore;
