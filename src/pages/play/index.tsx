@@ -48,6 +48,7 @@ function Play() {
 										className="hole-button"
 										handleButtonElement={handleButtonElement}
 										disabled={!startGame || parseGame}>
+										<Icon name="holeWave" className="back" />
 										<Icon
 											id={`mole-${index}-${colIndex}`}
 											name="mole"

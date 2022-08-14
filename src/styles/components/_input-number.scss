@@ -2,7 +2,10 @@ input[type="number"] {
   background: $beige;
   border: 1px solid $brown;
   height: 2rem;
-  width: 4vw;
+  max-width: 200px;
+  min-width: 100px;
+  padding: 0 32px;
+
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     appearance: none;

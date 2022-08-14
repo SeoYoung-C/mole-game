@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -43,6 +43,12 @@ const useReady = () => {
 		},
 		[handleMoleState]
 	);
+
+	useEffect(() => {
+		if (maxMole < mole) {
+			handleMoleState(maxMole);
+		}
+	}, [handleMoleState, maxMole, mole]);
 
 	return {
 		row,

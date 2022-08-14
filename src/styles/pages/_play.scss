@@ -10,7 +10,7 @@
     display: flex;
     height: 2rem;
     justify-content: center;
-    width: 80vw;
+    width: 70vh;
 
     .time {
       color: $black;
@@ -37,11 +37,11 @@
     .hole {
       overflow: hidden;
       .hole-button {
-        background: transparent !important;
-        border: none !important;
+        background: transparent;
+        border: none;
         height: calc(100% - 4vh);
         margin-top: 1vw;
-        padding: 0 !important;
+        padding: 0;
         position: relative;
         width: calc(100% - 4vh);
 
@@ -65,23 +65,42 @@
           z-index: 1;
         }
 
+        .back {
+          bottom: -60%;
+          height: 100%;
+          left: 0;
+          position: absolute;
+          transform: scaleX(-1);
+          width: 100%;
+          z-index: 0;
+          path {
+            fill: rgba($color: $brown, $alpha: 80%);
+          }
+        }
+
         .front {
-          bottom: -40%;
+          bottom: -70%;
           height: 100%;
-          left: 0;
+          left: -5%;
           position: absolute;
           width: 100%;
           z-index: 2;
+          path {
+            fill: $brown;
+          }
         }
+
         .bottom {
+          border-radius: 8px;
           bottom: -100%;
-          fill: #4d2c23;
+          fill: $brown;
           height: 100%;
           left: 0;
           position: absolute;
           width: 100%;
           z-index: 2;
         }
+
         .hidden {
           bottom: -100%;
         }
