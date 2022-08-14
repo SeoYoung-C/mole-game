@@ -1,6 +1,6 @@
 import { MOLE_PERCENT, BOM_PERVENT } from 'constants/percent';
 
-import { SetTimeoutRefType } from './interface';
+import { SetTimeoutRefType } from '../interface';
 
 const mutateTimeout = (button: Element, classList: DOMTokenList) => {
 	classList.add('hidden');
@@ -34,7 +34,7 @@ const hiddenHoleControl = (index: number, button: Element, mole: Element, bomb: 
 	return { [index]: 0 };
 };
 
-export const visibleEventControl = (
+export const visibleHoleEvent = (
 	holeIndexList: number[],
 	levelTime: number,
 	componentRef: HTMLTableElement | null,

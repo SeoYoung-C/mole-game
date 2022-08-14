@@ -7,8 +7,9 @@ import { UsePlayStore } from 'stores/play';
 import useTimer from 'hooks/useTimer';
 
 import { AppPaths } from 'constants/app-paths';
-import { visibleEventControl } from './visible-event-cotrol';
-import { ClearType, SetTimeoutRefType } from './interface';
+import { visibleHoleEvent } from './hole-event/visible-hole-event';
+import { clearHoleEvent } from './hole-event/clear-hole-event';
+import { SetTimeoutRefType } from './interface';
 
 const usePlay = () => {
 	const navigate = useNavigate();
@@ -23,7 +24,7 @@ const usePlay = () => {
 	const handleHoleSettimeout = (data: SetTimeoutRefType) => {
 		holeSetTimeoutRef.current = data;
 	};
-	const visibleRendomHoleList = useCallback((): void => {
+	const handleRendomHole = useCallback((): void => {
 		const showMoleList = holes.flat();
 		const eventHoleList = showMoleList.slice();
 		let moleNumber = 0;
@@ -33,7 +34,7 @@ const usePlay = () => {
 			moleNumber += 1;
 		}
 
-		visibleEventControl(
+		visibleHoleEvent(
 			eventHoleList,
 			levelTime,
 			gameContentAreaRef.current,
@@ -42,7 +43,7 @@ const usePlay = () => {
 		);
 	}, [mole, holes, levelTime]);
 
-	const { time, start, end, pouse } = useTimer(60, levelTime, visibleRendomHoleList);
+	const { time, start, end, pouse } = useTimer(60, levelTime, handleRendomHole);
 	const [startGame, setStartGame] = useState<boolean>(false);
 	const onClickStart = useCallback(() => {
 		start();
@@ -68,57 +69,34 @@ const usePlay = () => {
 		setParseGame(false);
 	}, [start]);
 
-	const clearTimeOut = (type: ClearType) => {
-		const timeOutCurrent = holeSetTimeoutRef.current;
-		const moleHoleSelect = gameContentAreaRef?.current?.querySelectorAll('button');
-
-		if (type === 'button') {
-			timeOutCurrent.forEach((item, index) => {
-				const html = moleHoleSelect?.[index];
-				Object.keys(item).forEach(key => {
-					if (typeof item[key] !== 'number' && html?.classList.contains('active')) {
-						clearTimeout(item[key]);
-					}
-				});
-			});
-		} else {
-			timeOutCurrent.forEach(item => {
-				Object.keys(item).forEach(key => {
-					if (typeof item[key] !== 'number') {
-						clearTimeout(item[key]);
-					}
-				});
-			});
-			holeSetTimeoutRef.current = [];
-		}
-	};
-
 	const handleButtonElement = useCallback(
 		(buttonRef: HTMLButtonElement | null) => {
 			const buttonElementIndex = buttonRef?.id.replace('hole-button-', '');
-			const moleElement = buttonRef?.querySelector(`#mole-${buttonElementIndex}`);
-			const bombElement = buttonRef?.querySelector(`#bomb-${buttonElementIndex}`);
+			const moleElementClassList = buttonRef?.querySelector(`#mole-${buttonElementIndex}`)?.classList;
+			const bombElementClassList = buttonRef?.querySelector(`#bomb-${buttonElementIndex}`)?.classList;
 
-			if (buttonRef !== undefined && buttonRef !== null) {
+			if (buttonRef) {
 				buttonRef.classList.add('active');
-				if (!moleElement?.classList.contains('hidden')) {
+				if (!moleElementClassList?.contains('hidden')) {
 					increaseScore();
-					moleElement?.classList.add('hidden');
+					moleElementClassList?.add('hidden');
 				}
-				if (!bombElement?.classList.contains('hidden')) {
+				if (!bombElementClassList?.contains('hidden')) {
 					decreaseScore();
-					bombElement?.classList.add('hidden');
+					bombElementClassList?.add('hidden');
 				}
+
 				buttonRef.setAttribute('disabled', '');
 			}
-			clearTimeOut('button');
+			clearHoleEvent('button', holeSetTimeoutRef.current, gameContentAreaRef.current);
 		},
 		[decreaseScore, increaseScore]
 	);
 
 	useEffect(() => {
 		if (time === 0) {
-			clearTimeOut('all');
+			clearHoleEvent('all', holeSetTimeoutRef.current);
+			holeSetTimeoutRef.current = [];
 			end();
 			navigate(AppPaths.result.path);
 		}
