@@ -14,9 +14,10 @@ function ReturnColGroup(col: number) {
 
 function Play() {
 	const {
+		holesAreaElementRef,
+
 		time,
 		score,
-		gameContentAreaRef,
 		col,
 		holes,
 		startGame,
@@ -36,7 +37,7 @@ function Play() {
 				<span className="time">남은시간 : {time}</span>
 				<span className="score">점수 : {score}</span>
 			</section>
-			<table ref={gameContentAreaRef} className="play__content">
+			<table ref={holesAreaElementRef} className="play__content">
 				<colgroup>{ReturnColGroup(col)}</colgroup>
 				<tbody>
 					{holes.map((row, index) => (

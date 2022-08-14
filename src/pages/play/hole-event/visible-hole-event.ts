@@ -37,11 +37,11 @@ const hiddenHoleControl = (index: number, button: Element, mole: Element, bomb: 
 export const visibleHoleEvent = (
 	holeIndexList: number[],
 	levelTime: number,
-	componentRef: HTMLTableElement | null,
-	holeSettimeoutRef: SetTimeoutRefType,
-	handleHoleSettimeout: (props: SetTimeoutRefType) => void
+	holesElement: HTMLTableElement | null,
+	holesEventsList: SetTimeoutRefType,
+	handleHolesEventList: (props: SetTimeoutRefType) => void
 ) => {
-	const holeButtonList = componentRef?.querySelectorAll('button');
+	const holeButtonList = holesElement?.querySelectorAll('button');
 
 	if (holeButtonList) {
 		const timeOutList = holeIndexList.map((item, index) => {
@@ -59,16 +59,16 @@ export const visibleHoleEvent = (
 				return hiddenHoleControl(index, buttonElement, mole, bomb, levelTime);
 			}
 
-			return holeSettimeoutRef?.[index];
+			return holesEventsList?.[index];
 		});
 
-		if (holeSettimeoutRef.length !== 0) {
-			const ref = holeSettimeoutRef?.map((item, index) => {
+		if (holesEventsList.length !== 0) {
+			const ref = holesEventsList?.map((item, index) => {
 				return { ...item, ...timeOutList[index] };
 			});
-			handleHoleSettimeout(ref);
+			handleHolesEventList(ref);
 		} else {
-			handleHoleSettimeout(timeOutList);
+			handleHolesEventList(timeOutList);
 		}
 	}
 };

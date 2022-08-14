@@ -14,16 +14,18 @@ import { SetTimeoutRefType } from './interface';
 const usePlay = () => {
 	const navigate = useNavigate();
 
-	const gameContentAreaRef = useRef<HTMLTableElement>(null);
-	const holeSetTimeoutRef = useRef<SetTimeoutRefType>([]);
+	const holesAreaElementRef = useRef<HTMLTableElement>(null);
+	const holesEventListRef = useRef<SetTimeoutRefType>([]);
 
 	const { col, holes, mole } = UseReadyStore();
 	const { score, decreaseScore, increaseScore, clearPlayState } = UsePlayStore();
 
 	const [levelTime, setLevelTime] = useState<number>(1500);
-	const handleHoleSettimeout = (data: SetTimeoutRefType) => {
-		holeSetTimeoutRef.current = data;
+
+	const handleHolesEventList = (data: SetTimeoutRefType) => {
+		holesEventListRef.current = data;
 	};
+
 	const handleRendomHole = useCallback((): void => {
 		const showMoleList = holes.flat();
 		const eventHoleList = showMoleList.slice();
@@ -37,9 +39,9 @@ const usePlay = () => {
 		visibleHoleEvent(
 			eventHoleList,
 			levelTime,
-			gameContentAreaRef.current,
-			holeSetTimeoutRef.current,
-			handleHoleSettimeout
+			holesAreaElementRef.current,
+			holesEventListRef.current,
+			handleHolesEventList
 		);
 	}, [mole, holes, levelTime]);
 
@@ -88,15 +90,15 @@ const usePlay = () => {
 
 				buttonRef.setAttribute('disabled', '');
 			}
-			clearHoleEvent('button', holeSetTimeoutRef.current, gameContentAreaRef.current);
+			clearHoleEvent('button', holesEventListRef.current, holesAreaElementRef.current);
 		},
 		[decreaseScore, increaseScore]
 	);
 
 	useEffect(() => {
 		if (time === 0) {
-			clearHoleEvent('all', holeSetTimeoutRef.current);
-			holeSetTimeoutRef.current = [];
+			clearHoleEvent('all', holesEventListRef.current);
+			holesEventListRef.current = [];
 			end();
 			navigate(AppPaths.result.path);
 		}
@@ -119,9 +121,10 @@ const usePlay = () => {
 	}, [time, end, navigate]);
 
 	return {
+		holesAreaElementRef,
+
 		time,
 		score,
-		gameContentAreaRef,
 		col,
 		holes,
 		startGame,

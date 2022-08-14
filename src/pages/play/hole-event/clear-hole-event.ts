@@ -2,13 +2,13 @@ import { ClearType, SetTimeoutRefType } from '../interface';
 
 export const clearHoleEvent = (
 	type: ClearType,
-	timeOutCurrent: SetTimeoutRefType,
-	componentRef?: HTMLTableElement | null
+	holesEventList: SetTimeoutRefType,
+	holesElement?: HTMLTableElement | null
 ) => {
-	const moleHoleSelect = componentRef?.querySelectorAll('button');
+	const moleHoleSelect = holesElement?.querySelectorAll('button');
 
 	if (type === 'button') {
-		timeOutCurrent.forEach((item, index) => {
+		holesEventList.forEach((item, index) => {
 			const html = moleHoleSelect?.[index];
 			Object.keys(item).forEach(key => {
 				if (typeof item[key] !== 'number' && html?.classList.contains('active')) {
@@ -17,7 +17,7 @@ export const clearHoleEvent = (
 			});
 		});
 	} else {
-		timeOutCurrent.forEach(item => {
+		holesEventList.forEach(item => {
 			Object.keys(item).forEach(key => {
 				if (typeof item[key] !== 'number') {
 					clearTimeout(item[key]);
