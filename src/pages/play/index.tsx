@@ -49,13 +49,7 @@ function Play() {
 										handleButtonElement={handleButtonElement}
 										disabled={!startGame || parseGame}>
 										<Icon name="holeWave" className="back" />
-										<Icon
-											id={`mole-${index}-${colIndex}`}
-											name="mole"
-											width="80px"
-											height="80px"
-											className="mole hidden"
-										/>
+										<Icon id={`mole-${index}-${colIndex}`} name="mole" className="mole hidden" />
 										<Icon id={`bomb-${index}-${colIndex}`} name="bomb" className="bomb hidden" />
 										<Icon name="holeWave" className="front" />
 										<Icon name="holeBottom" className="bottom" />
