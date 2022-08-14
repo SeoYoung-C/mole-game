@@ -9,7 +9,7 @@ interface UseTimerHooks {
 	pouse: () => void;
 }
 
-const useTimer = (initial: number, ms: number, callBackFunc?: () => void): UseTimerHooks => {
+const useTimer = (initial: number, ms: number, startCallBackFunc?: () => void): UseTimerHooks => {
 	const [time, setTime] = useState<number>(initial);
 	const intervalRef = useRef<intervalRefType>(null);
 
@@ -18,10 +18,10 @@ const useTimer = (initial: number, ms: number, callBackFunc?: () => void): UseTi
 			return;
 		}
 		intervalRef.current = setInterval(() => {
-			callBackFunc?.();
+			startCallBackFunc?.();
 			setTime(prev => prev - 1);
 		}, ms);
-	}, [callBackFunc, ms]);
+	}, [startCallBackFunc, ms]);
 
 	const end = useCallback(() => {
 		if (intervalRef.current === null) {
