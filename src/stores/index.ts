@@ -1,27 +1,27 @@
 import create, { GetState, SetState, StoreApi } from 'zustand';
 import { persist, devtools } from 'zustand/middleware';
 
-import { ReadyStore } from './ready/initial';
-import { PlayStore } from './play/initial';
+import { ReadySlice } from './ready/slice';
+import { PlaySlice } from './play/slice';
 
-import type { ReadyStateStore } from './ready/interface';
-import type { PlayStateStore } from './play/interface';
+import type { ReadyStateSlice } from './ready/interface';
+import type { PlayStateSlice } from './play/interface';
 
-type Store = ReadyStateStore & PlayStateStore;
+type Store = ReadyStateSlice & PlayStateSlice;
 
 const useStore = create<Store>(
 	devtools(
 		persist(
 			(set, get, api) => ({
-				...ReadyStore(
-					set as unknown as SetState<ReadyStateStore>,
-					get as GetState<ReadyStateStore>,
-					api as StoreApi<ReadyStateStore>
+				...ReadySlice(
+					set as unknown as SetState<ReadyStateSlice>,
+					get as GetState<ReadyStateSlice>,
+					api as StoreApi<ReadyStateSlice>
 				),
-				...PlayStore(
-					set as unknown as SetState<PlayStateStore>,
-					get as GetState<PlayStateStore>,
-					api as StoreApi<PlayStateStore>
+				...PlaySlice(
+					set as unknown as SetState<PlayStateSlice>,
+					get as GetState<PlayStateSlice>,
+					api as StoreApi<PlayStateSlice>
 				)
 			}),
 			{

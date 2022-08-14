@@ -4,11 +4,11 @@ import useStore from 'stores';
 export const UsePlayStore = () => {
 	const { score, mutateScoreIncreaseState, mustateScoreDecreaseState, mutateClearState } = useStore(state => state);
 
-	const handleIncreaseScore = useCallback(() => {
+	const increaseScore = useCallback(() => {
 		mutateScoreIncreaseState();
 	}, [mutateScoreIncreaseState]);
 
-	const handleDecreaseScore = useCallback(() => {
+	const decreaseScore = useCallback(() => {
 		mustateScoreDecreaseState();
 	}, [mustateScoreDecreaseState]);
 
@@ -18,8 +18,8 @@ export const UsePlayStore = () => {
 
 	return {
 		score,
-		handleIncreaseScore,
-		handleDecreaseScore,
+		increaseScore,
+		decreaseScore,
 		clearPlayState
 	};
 };

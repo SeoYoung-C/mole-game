@@ -2,7 +2,7 @@ import React from 'react';
 
 import { NumberInput, Button } from 'components';
 
-import useReady from './hook';
+import useReady from './useReady';
 
 function Ready() {
 	const { row, col, mole, maxMole, onChangeRow, onChangeCol, onChangeMole, onClickStart, onClickRanking } =

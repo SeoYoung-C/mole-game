@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from 'components';
 import { formatDate } from 'utils/format-date';
 
-import useRanking from './hook';
+import useRanking from './useRanking';
 
 function Ranking() {
 	const { ranking, onClickResetRanking, onClickGameStart } = useRanking();

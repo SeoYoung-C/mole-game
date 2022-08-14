@@ -2,15 +2,15 @@ import React from 'react';
 
 import Icon from 'assets/icons';
 import { Button } from 'components';
-import usePlay from './hook';
+import usePlay from './usePlay';
 
-const ReturnColGroup = (col: number) => {
+function ReturnColGroup(col: number) {
 	const result = [];
 	for (let i = 1; i <= col; i += 1) {
 		result.push(<col key={`${i}`} />);
 	}
 	return result;
-};
+}
 
 function Play() {
 	const {

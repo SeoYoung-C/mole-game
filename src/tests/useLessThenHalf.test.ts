@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react';
-import useLessThenHalf, { UseLessThenHalfProps } from './useLessThenHalf';
+import useLessThenHalf, { UseLessThenHalfProps } from '../hooks/useLessThenHalf';
 
 describe('hooks/useLessThenHalf', () => {
 	it('useLessThenHalf default hooks', () => {

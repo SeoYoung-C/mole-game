@@ -1,7 +1,6 @@
-import { SetTimeoutRefType } from './interface';
+import { MOLE_PERCENT, BOM_PERVENT } from 'constants/percent';
 
-export const MOLE_PERCENT = 0.3;
-export const BOM_PERVENT = 0.5;
+import { SetTimeoutRefType } from './interface';
 
 const mutateTimeout = (button: Element, classList: DOMTokenList) => {
 	classList.add('hidden');

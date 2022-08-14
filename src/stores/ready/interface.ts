@@ -5,7 +5,7 @@ export interface ReadyState {
 	holes: number[][];
 }
 
-export interface ReadyStateStore extends ReadyState {
+export interface ReadyStateSlice extends ReadyState {
 	mutateRowState: (row: number) => void;
 	mutateColState: (col: number) => void;
 	mutateMoleState: (mole: number) => void;

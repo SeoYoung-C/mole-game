@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'components';
-import useResult from './hook';
+import useResult from './useResult';
 
 function Result() {
 	const { score, onClickPlayGames, onClickRedirectReady, onClickRanking } = useResult();

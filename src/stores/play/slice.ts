@@ -1,11 +1,11 @@
 import { StateCreator } from 'zustand';
-import { PlayState, PlayStateStore } from './interface';
+import { PlayState, PlayStateSlice } from './interface';
 
 export const INITIAL_STATE: PlayState = {
 	score: 0
 };
 
-export const PlayStore: StateCreator<PlayStateStore> = set => ({
+export const PlaySlice: StateCreator<PlayStateSlice> = set => ({
 	...INITIAL_STATE,
 
 	mutateScoreIncreaseState: () => {

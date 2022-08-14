@@ -14,27 +14,27 @@ export const UseReadyStore = () => {
 		mutateClearState
 	} = useStore(state => state);
 
-	const handleRowState = useCallback(
+	const changeRowState = useCallback(
 		(rowState: number) => {
 			mutateRowState(rowState);
 		},
 		[mutateRowState]
 	);
-	const handleColState = useCallback(
+	const changeColState = useCallback(
 		(colState: number) => {
 			mutateColState(colState);
 		},
 		[mutateColState]
 	);
 
-	const handleMoleState = useCallback(
+	const changeMoleState = useCallback(
 		(moleState: number) => {
 			mutateMoleState(moleState);
 		},
 		[mutateMoleState]
 	);
 
-	const handleHolesState = useCallback(
+	const changeHolesState = useCallback(
 		(holesState: number[][]) => {
 			mutateHolesState(holesState);
 		},
@@ -50,10 +50,10 @@ export const UseReadyStore = () => {
 		col,
 		mole,
 		holes,
-		handleRowState,
-		handleColState,
-		handleMoleState,
-		handleHolesState,
+		changeRowState,
+		changeColState,
+		changeMoleState,
+		changeHolesState,
 		clearReadyState
 	};
 };

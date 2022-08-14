@@ -17,7 +17,7 @@ const usePlay = () => {
 	const holeSetTimeoutRef = useRef<SetTimeoutRefType>([]);
 
 	const { col, holes, mole } = UseReadyStore();
-	const { score, handleDecreaseScore, handleIncreaseScore, clearPlayState } = UsePlayStore();
+	const { score, decreaseScore, increaseScore, clearPlayState } = UsePlayStore();
 
 	const [levelTime, setLevelTime] = useState<number>(1500);
 	const handleHoleSettimeout = (data: SetTimeoutRefType) => {
@@ -102,18 +102,18 @@ const usePlay = () => {
 			if (buttonRef !== undefined && buttonRef !== null) {
 				buttonRef.classList.add('active');
 				if (!moleElement?.classList.contains('hidden')) {
-					handleIncreaseScore();
+					increaseScore();
 					moleElement?.classList.add('hidden');
 				}
 				if (!bombElement?.classList.contains('hidden')) {
-					handleDecreaseScore();
+					decreaseScore();
 					bombElement?.classList.add('hidden');
 				}
 				buttonRef.setAttribute('disabled', '');
 			}
 			clearTimeOut('button');
 		},
-		[handleDecreaseScore, handleIncreaseScore]
+		[decreaseScore, increaseScore]
 	);
 
 	useEffect(() => {

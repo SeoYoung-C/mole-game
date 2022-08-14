@@ -1,5 +1,5 @@
 import { StateCreator } from 'zustand';
-import { ReadyState, ReadyStateStore } from './interface';
+import { ReadyState, ReadyStateSlice } from './interface';
 
 export const INITIAL_STATE: ReadyState = {
 	row: 2,
@@ -11,7 +11,7 @@ export const INITIAL_STATE: ReadyState = {
 	]
 };
 
-export const ReadyStore: StateCreator<ReadyStateStore> = set => ({
+export const ReadySlice: StateCreator<ReadyStateSlice> = set => ({
 	...INITIAL_STATE,
 
 	mutateRowState: (row: number) => {

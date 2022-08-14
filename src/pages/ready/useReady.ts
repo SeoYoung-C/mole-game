@@ -10,14 +10,14 @@ import { AppPaths } from 'constants/app-paths';
 const useReady = () => {
 	const navigate = useNavigate();
 
-	const { row, col, mole, handleRowState, handleColState, handleMoleState, handleHolesState } = UseReadyStore();
+	const { row, col, mole, changeRowState, changeColState, changeMoleState, changeHolesState } = UseReadyStore();
 	const maxMole = useLessThenHalf({ row, col });
 
 	const onClickStart = useCallback(() => {
 		const newArray = Array.from(Array(row), () => Array(col).fill(0));
-		handleHolesState(newArray);
+		changeHolesState(newArray);
 		navigate(AppPaths.play.path);
-	}, [navigate, handleHolesState, row, col]);
+	}, [navigate, changeHolesState, row, col]);
 
 	const onClickRanking = useCallback(() => {
 		navigate(AppPaths.ranking.path);
@@ -25,30 +25,30 @@ const useReady = () => {
 
 	const onChangeRow = useCallback(
 		(value: number) => {
-			handleRowState(value);
+			changeRowState(value);
 		},
-		[handleRowState]
+		[changeRowState]
 	);
 
 	const onChangeCol = useCallback(
 		(value: number) => {
-			handleColState(value);
+			changeColState(value);
 		},
-		[handleColState]
+		[changeColState]
 	);
 
 	const onChangeMole = useCallback(
 		(value: number) => {
-			handleMoleState(value);
+			changeMoleState(value);
 		},
-		[handleMoleState]
+		[changeMoleState]
 	);
 
 	useEffect(() => {
 		if (maxMole < mole) {
-			handleMoleState(maxMole);
+			changeMoleState(maxMole);
 		}
-	}, [handleMoleState, maxMole, mole]);
+	}, [changeMoleState, maxMole, mole]);
 
 	return {
 		row,
