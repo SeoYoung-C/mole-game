@@ -29,6 +29,7 @@ const useReady = () => {
 	const onChangeRow = useCallback(
 		(value: number) => {
 			mutateRowState(value);
+
 			const tempMole = calculatorLessThenHalf(value, col);
 			if (tempMole < mole) {
 				mutateMoleState(tempMole);
@@ -40,6 +41,7 @@ const useReady = () => {
 	const onChangeCol = useCallback(
 		(value: number) => {
 			mutateColState(value);
+
 			const tempMole = calculatorLessThenHalf(row, value);
 			if (tempMole < mole) {
 				mutateMoleState(tempMole);
