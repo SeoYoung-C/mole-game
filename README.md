@@ -119,8 +119,8 @@ v16.14.2
 - 입력된 행과 열의 숫자만큼 두더지 굴을 화면에 배치(일정시간 간격으로 나타났다 사라짐, 클릭시 두더지 숨김, 애니메이션 효과적용, 변칙요소 적용)  
 화면 상단에는 남은 시간과 점수를 배치(게임 시간 60초, 두더지 1마리 -> score +1 / 폭탄 1개 -> score -1), 0초가 되면 결과 화면으로 이동
 화면 하단 버튼 (시작하기, 일시정지, 그만하기, 재개하기)   
-  store에 정의된 holes state를 통해 게임 준비 화면에서 입력받은 행과 열을 개산하여 화면에 rendering 하였습니다. 게임 시작 버튼을
-  - 클릭하면 useTimer hooks의 start 함수를 통해 60초 동안 매 1초 마다 handleRendomHole 함수를 실행합니다.
+  - store에 정의된 holes state를 통해 게임 준비 화면에서 입력받은 행과 열을 개산하여 화면에 rendering 하였습니다. 게임 시작 버튼을
+  클릭하면 useTimer hooks의 start 함수를 통해 60초 동안 매 1초 마다 handleRendomHole 함수를 실행합니다.
   handleRendomHole 함수는 구멍해서 두더지가 나타날지 또는 폭탄이 나타날지에 대한 실행 여부를 제어 하며, levelTime으로 정의된
   시간이 지날때 마다 두더지의 등장 시간이 짧아집니다. 두더지가 나타났을때 두더지를 클릭한 경우, 점수에 1점을 더하고, 폭탄을 클릭할 경우
   기존 점수에서 1점을 빼는데, 이때 store에 정의된 score state에  mutateScoreStateIncrease, mutateScoreStateDecrease action 함수를 통해 스토어의 score 값을 dispatch 합니다.
@@ -204,43 +204,47 @@ v16.14.2
 ### 3. 결과 화면 (src > pages > result)
 → index.tsx : 페이지를 표시 하기 위한 html rendering   
 → useResult.ts : 결과 화면 에서 필요한 함수들을 custom hook을 통해 작성  
+
 - 두더지를 잡아 획득한 점수 보여주기, 다시하기 처음으로 버튼 추가
   - 획득한 점수는 store에 score state를 통해 값을 fetch 하고 화면에 표출 합니다. 다시 하기 버튼 클릭시 store에 저장된 score state를 0첨으로 초기화 하며, play 화면으로 이동합니다. 게임이 완료되기 이전 상태의 행과, 열, 두더지의 값 그대로 다시 게임이 시작되며, 처음으로 버튼 클릭시 게임 시작 화면으로 돌아갑니다. 또한 랭킹 버튼 클릭시 순위 화면으로 이동합니다. 랭킹 화면이 처음 rendering 되는 순간, 게임의 score가 1점 이상인 경우 cookie에 ranking이 저장 됩니다.
-  ```jsx
-  	useEffect(() => {
-		if (score > 0) {
-			const ranking = getCookie('ranking');
-			const parseRanking: Ranks[] = JSON.parse(ranking ?? '[]');
-			parseRanking.push({ score, date: new Date().toISOString() });
 
-			const rankList = parseRanking
-				.reduce((acc: Ranks[], cur) => {
-					if (
-						acc.findIndex(
-							({ date }) => 
-                          formatDate(date, 'YYYYMMDDHHmmss') === formatDate(cur.date, 'YYYYMMDDHHmmss')
-						) === -1
-					) {
-						acc.push(cur);
-					}
-					return acc;
-				}, [])
-				.sort((a, b) => {
-					const rules = b.score - a.score;
-					if (rules > 0) {
-						return 1;
-					}
-					if (rules === 0) {
-						return new Date(b.date).getTime() - new Date(a.date).getTime();
-					}
-					return -1;
-				})
-				.slice(0, 10);
-
-			setCookie('ranking', JSON.stringify(rankList), 30);
-		}
-	}, [score]);
-  ```
+    ```jsx
+    useEffect(() => {
+      if (score > 0) {
+        const ranking = getCookie('ranking');
+        const parseRanking: Ranks[] = JSON.parse(ranking ?? '[]');
+        parseRanking.push({ score, date: new Date().toISOString() });
+      
+        const rankList = parseRanking
+          .reduce((acc: Ranks[], cur) => {
+            const equalDateTime = acc.findIndex(
+              ({ date }) => {
+                const prevDate = formatDate(date, 'YYYYMMDDHHmmss')
+                const newDate = formatDate(cur.date, 'YYYYMMDDHHmmss')
+                return prevDate === newDate
+              }
+            );
+            if (equalDateTime === -1) {
+              acc.push(cur);
+            }
+            return acc
+          }, [])
+          .sort((a, b) => {
+            const rules = b.score - a.score;
+            if (rules > 0) {
+              return 1;
+            }
+            if (rules === 0) {
+              return new Date(b.date).getTime() - new Date(a.date).getTime();
+            }
+            return -1;
+          })
+        .slice(0, 10);
+      
+        setCookie('ranking', JSON.stringify(rankList), 30);
+      }
+    } , [score]);
+    ```
 
 ---
 ### 4. 순위 화면 (src > pages > ranking)
@@ -249,34 +253,34 @@ v16.14.2
 -  게임 결과에 따른 순위를 제공하고, 게임의 점수를 기준으로 정렬하며 일시와 함꼐 화면에 표출, 순위는 최대 열개 까지만 노출, 순위를 초기화 하는 기능을 제공  
     - 쿠키에 저장된 ranking에 접근 하여, 저장된 ranking을 화면에 표출하고, 순위를 초기화 하는 함수를 제공
 
-    ```jsx
-    const useRanking = () => {
-	    const navigate = useNavigate();
-	    const [ranking, setRanking] = useState<Ranks[]>([]);
+      ```jsx
+      const useRanking = () => {
+        const navigate = useNavigate();
+        const [ranking, setRanking] = useState<Ranks[]>([]);
 
-	    const onClickResetRanking = useCallback(() => {
-		    setRanking([]);
-		    deleteCookie('ranking');
-	    }, []);
+        const onClickResetRanking = useCallback(() => {
+          setRanking([]);
+          deleteCookie('ranking');
+      }, []);
 
       // ...
+      
+        useEffect(() => {
+          const getRanking = getCookie('ranking');
+          if (getRanking) {
+            const rankList: Ranks[] = JSON.parse(getRanking);
+            setRanking(rankList);
+          }
+        }, []);
+      
+        return {
+          ranking,
+          onClickResetRanking,
+          onClickGameStart
+        };
+      };
+      ```
 
-	    useEffect(() => {
-		    const getRanking = getCookie('ranking');
-		    if (getRanking) {
-			    const rankList: Ranks[] = JSON.parse(getRanking);
-			    setRanking(rankList);
-		    }
-	    }, []);
-
-	    return {
-		    ranking,
-		    onClickResetRanking,
-		    onClickGameStart
-	    };
-    };
-    ```
----
 
 
 
