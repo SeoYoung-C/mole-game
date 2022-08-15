@@ -1,10 +1,10 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
 import UseStore from 'stores';
 
-import useLessThenHalf from 'hooks/useLessThenHalf';
+import useLessThenHalf, { calculatorLessThenHalf } from 'hooks/useLessThenHalf';
 
 import { AppPaths } from 'constants/app-paths';
 
@@ -29,15 +29,23 @@ const useReady = () => {
 	const onChangeRow = useCallback(
 		(value: number) => {
 			mutateRowState(value);
+			const tempMole = calculatorLessThenHalf(value, col);
+			if (tempMole < mole) {
+				mutateMoleState(tempMole);
+			}
 		},
-		[mutateRowState]
+		[mutateRowState, mutateMoleState, mole, col]
 	);
 
 	const onChangeCol = useCallback(
 		(value: number) => {
 			mutateColState(value);
+			const tempMole = calculatorLessThenHalf(row, value);
+			if (tempMole < mole) {
+				mutateMoleState(tempMole);
+			}
 		},
-		[mutateColState]
+		[mutateColState, mutateMoleState, mole, row]
 	);
 
 	const onChangeMole = useCallback(
@@ -46,12 +54,6 @@ const useReady = () => {
 		},
 		[mutateMoleState]
 	);
-
-	useEffect(() => {
-		if (maxMole < mole) {
-			mutateMoleState(maxMole);
-		}
-	}, [mutateMoleState, maxMole, mole]);
 
 	return {
 		row,

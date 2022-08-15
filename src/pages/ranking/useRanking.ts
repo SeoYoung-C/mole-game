@@ -10,11 +10,13 @@ const useRanking = () => {
 	const navigate = useNavigate();
 	const [ranking, setRanking] = useState<Ranks[]>([]);
 
+	// 게임 순위 초기화 버튼클릭시
 	const onClickResetRanking = useCallback(() => {
 		setRanking([]);
 		deleteCookie('ranking');
 	}, []);
 
+	// 게임 시작 버튼 클릭시
 	const onClickGameStart = useCallback(() => {
 		navigate(AppPaths.ready.path);
 	}, [navigate]);
