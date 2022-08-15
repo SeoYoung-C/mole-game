@@ -29,6 +29,7 @@ const useResult = () => {
 		navigate(AppPaths.ranking.path);
 	}, [mutateClearScoreState, navigate]);
 
+	// 페이지 진입시 score의 값이 0 이상일때 순위를 Cookie에 저장
 	useEffect(() => {
 		if (score > 0) {
 			const ranking = getCookie('ranking');

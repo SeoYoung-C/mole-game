@@ -16,9 +16,10 @@ const useReady = () => {
 	);
 	const maxMole = useLessThenHalf({ row, col });
 
+	// 게임 시작 버튼 클릭시 두더지가 나올 구멍 설정 후 게임 화면으로 이동
 	const onClickStart = useCallback(() => {
-		const newArray = Array.from(Array(row), () => Array(col).fill(0));
-		mutateHolesState(newArray);
+		const initHoles = Array.from(Array(row), () => Array(col).fill(0));
+		mutateHolesState(initHoles);
 		navigate(AppPaths.play.path);
 	}, [navigate, mutateHolesState, row, col]);
 
