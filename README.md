@@ -213,22 +213,19 @@ v16.14.2
       if (score > 0) {
         const ranking = getCookie('ranking');
         const parseRanking: Ranks[] = JSON.parse(ranking ?? '[]');
-        parseRanking.push({ score, date: new Date().toISOString() });
+        const newRecords = { score, date: new Date().toISOString() };
       
-        const rankList = parseRanking
-          .reduce((acc: Ranks[], cur) => {
-            const equalDateTime = acc.findIndex(
-              ({ date }) => {
-                const prevDate = formatDate(date, 'YYYYMMDDHHmmss')
-                const newDate = formatDate(cur.date, 'YYYYMMDDHHmmss')
-                return prevDate === newDate
-              }
-            );
-            if (equalDateTime === -1) {
-              acc.push(cur);
-            }
-            return acc
-          }, [])
+        const equalDateTime = parseRanking.findIndex(prev => {
+          const prevRankDate = formatDate(prev.date, 'YYYYMMDDHHmm');
+          const newRecordDate = formatDate(newRecords.date, 'YYYYMMDDHHmm');
+          const prevRankScore = prev.score;
+          const newRecordScore = newRecords.score;
+            return prevRankDate === newRecordDate && prevRankScore === newRecordScore
+        });
+
+        if (equalDateTime === -1) parseRanking.push(newRecords);
+
+        parseRanking
           .sort((a, b) => {
             const rules = b.score - a.score;
             if (rules > 0) {
