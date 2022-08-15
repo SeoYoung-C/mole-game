@@ -1,35 +1,35 @@
 ## Project Setup
----
+
 ```bash
 npm install or yarn install
 ```
 
 ## Compiles and hot-reloads for development
----
+
 ```bash
 npm run start or yarn start
 ```
 
 ## Compiles and minifies for production
----
+
 ```bash
 npm run build or yarn build
 ```
 
 ## Test
----
+
 ```bash
 npm run test or yarn test
 ```
 
 ## Node Version
----
+
 ```bash
 v16.14.2
 ```
 
 ## Project 
----
+
 ```
 ├── public  → index.html
 │
@@ -65,7 +65,7 @@ v16.14.2
 ```
 
 ## 요구사항 및 해결전략  
----
+
 ### 1. 준비 화면 (src > pages > ready)  
 →  index.tsx : 페이지를 표시 하기 위한 html rendering   
 →  useReady.ts : 준비 화면 에서 필요한 함수들을 custom hook을 통해 작성  
@@ -284,7 +284,7 @@ v16.14.2
 
 
 ## 추가한 라이브러리
----
+
 ```
 1. react-router-dom
 2. sass (mark-up을 위함)
@@ -295,13 +295,13 @@ v16.14.2
 ```
 
 ## Copyright icon
----
+
 <div>Icons made by <a href="https://www.flaticon.com/authors/darius-dan" title="Darius Dan">Darius Dan</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 <div>Icons made by <a href="" title="Adib Sulthon">Adib Sulthon</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>  
   
 ## Copyright background image
----
+
 ```
 leehy77629@gmail.com
 ```
