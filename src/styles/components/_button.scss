@@ -14,8 +14,4 @@ button {
     color: $brown;
     cursor: pointer;
   }
-
-  &:disabled {
-    cursor: not-allowed;
-  }
 }

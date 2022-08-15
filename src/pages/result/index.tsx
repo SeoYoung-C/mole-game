@@ -7,10 +7,11 @@ function Result() {
 
 	return (
 		<main className="result">
-			<h1>
-				최종 점수 <span>{score}</span>
-			</h1>
+			<h1>Game Over !</h1>
 
+			<h2>
+				최종 점수 <span>{score}</span>
+			</h2>
 			<section className="result__button-wrap">
 				<div>
 					<Button onClick={onClickPlayGames}>다시하기 </Button>

@@ -25,7 +25,8 @@ const UseStore = create<Store>(
 				)
 			}),
 			{
-				name: 'store'
+				name: 'store',
+				getStorage: () => sessionStorage
 			}
 		)
 	)
