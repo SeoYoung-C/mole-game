@@ -16,7 +16,7 @@ const usePlay = () => {
 	const holesAreaElementRef = useRef<HTMLTableElement>(null);
 	const holesEventListRef = useRef<SetTimeoutRefType>([]);
 
-	const { col, holes, mole, score, mutateScoreStateDecrease, mutateScoreStateIncrease, mutateClearPlayState } =
+	const { col, holes, mole, score, mutateScoreStateDecrease, mutateScoreStateIncrease, mutateClearScoreState } =
 		UseStore(state => state);
 
 	const [levelTime, setLevelTime] = useState<number>(1500);
@@ -25,12 +25,12 @@ const usePlay = () => {
 		holesEventListRef.current = data;
 	};
 
-	const handleRendomHole = useCallback((): void => {
-		const showMoleList = holes.flat();
-		const eventHoleList = showMoleList.slice();
+	const handleRendomHole = useCallback(() => {
+		const eventHoleList = holes.flat().slice();
+
 		let moleNumber = 0;
 		while (moleNumber < mole) {
-			const selectMoleIndex = Math.floor(Math.random() * showMoleList.length);
+			const selectMoleIndex = Math.floor(Math.random() * eventHoleList.length);
 			eventHoleList.splice(selectMoleIndex, 1, selectMoleIndex);
 			moleNumber += 1;
 		}
@@ -59,11 +59,11 @@ const usePlay = () => {
 
 	const onClickStop = useCallback(() => {
 		end();
-		mutateClearPlayState();
+		mutateClearScoreState();
 		setParseGame(false);
 		setStartGame(false);
 		navigate(AppPaths.ready.path);
-	}, [end, navigate, mutateClearPlayState]);
+	}, [end, navigate, mutateClearScoreState]);
 
 	const onClickRestart = useCallback(() => {
 		start();

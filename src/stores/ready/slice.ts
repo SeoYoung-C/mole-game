@@ -4,11 +4,7 @@ import { ReadyState, ReadyStateSlice } from './interface';
 export const INITIAL_STATE: ReadyState = {
 	row: 2,
 	col: 2,
-	mole: 1,
-	holes: [
-		[0, 0],
-		[0, 0]
-	]
+	mole: 1
 };
 
 export const ReadySlice: StateCreator<ReadyStateSlice> = set => ({
@@ -24,10 +20,6 @@ export const ReadySlice: StateCreator<ReadyStateSlice> = set => ({
 
 	mutateMoleState: (mole: number) => {
 		set(() => ({ mole }));
-	},
-
-	mutateHolesState: (holes: number[][]) => {
-		set(() => ({ holes }));
 	},
 
 	mutateClearReadyState: () => {

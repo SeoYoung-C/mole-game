@@ -2,11 +2,19 @@ import { StateCreator } from 'zustand';
 import { PlayState, PlayStateSlice } from './interface';
 
 export const INITIAL_STATE: PlayState = {
+	holes: [
+		[0, 0],
+		[0, 0]
+	],
 	score: 0
 };
 
 export const PlaySlice: StateCreator<PlayStateSlice> = set => ({
 	...INITIAL_STATE,
+
+	mutateHolesState: (holes: number[][]) => {
+		set(() => ({ holes }));
+	},
 
 	mutateScoreStateIncrease: () => {
 		set(state => ({ score: state.score + 1 }));
@@ -16,7 +24,7 @@ export const PlaySlice: StateCreator<PlayStateSlice> = set => ({
 		set(state => ({ score: state.score - 1 }));
 	},
 
-	mutateClearPlayState: () => {
-		set({ ...INITIAL_STATE });
+	mutateClearScoreState: () => {
+		set({ score: INITIAL_STATE.score });
 	}
 });

@@ -12,22 +12,22 @@ import { formatDate } from '../../utils/format-date';
 
 const useResult = () => {
 	const navigate = useNavigate();
-	const { score, mutateClearPlayState } = UseStore(state => state);
+	const { score, mutateClearScoreState } = UseStore(state => state);
 
 	const onClickPlayGames = useCallback(() => {
-		mutateClearPlayState();
+		mutateClearScoreState();
 		navigate(AppPaths.play.path);
-	}, [mutateClearPlayState, navigate]);
+	}, [mutateClearScoreState, navigate]);
 
 	const onClickRedirectReady = useCallback(() => {
-		mutateClearPlayState();
+		mutateClearScoreState();
 		navigate(AppPaths.ready.path);
-	}, [mutateClearPlayState, navigate]);
+	}, [mutateClearScoreState, navigate]);
 
 	const onClickRanking = useCallback(() => {
-		mutateClearPlayState();
+		mutateClearScoreState();
 		navigate(AppPaths.ranking.path);
-	}, [mutateClearPlayState, navigate]);
+	}, [mutateClearScoreState, navigate]);
 
 	useEffect(() => {
 		if (score > 0) {
