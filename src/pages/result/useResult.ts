@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { UsePlayStore } from 'stores/play';
+import UseStore from 'stores';
 
 import { getCookie, setCookie } from 'utils/cookie';
 
@@ -12,22 +12,22 @@ import { formatDate } from '../../utils/format-date';
 
 const useResult = () => {
 	const navigate = useNavigate();
-	const { score, clearPlayState } = UsePlayStore();
+	const { score, mutateClearPlayState } = UseStore(state => state);
 
 	const onClickPlayGames = useCallback(() => {
-		clearPlayState();
+		mutateClearPlayState();
 		navigate(AppPaths.play.path);
-	}, [clearPlayState, navigate]);
+	}, [mutateClearPlayState, navigate]);
 
 	const onClickRedirectReady = useCallback(() => {
-		clearPlayState();
+		mutateClearPlayState();
 		navigate(AppPaths.ready.path);
-	}, [clearPlayState, navigate]);
+	}, [mutateClearPlayState, navigate]);
 
 	const onClickRanking = useCallback(() => {
-		clearPlayState();
+		mutateClearPlayState();
 		navigate(AppPaths.ranking.path);
-	}, [clearPlayState, navigate]);
+	}, [mutateClearPlayState, navigate]);
 
 	useEffect(() => {
 		if (score > 0) {

@@ -10,5 +10,5 @@ export interface ReadyStateSlice extends ReadyState {
 	mutateColState: (col: number) => void;
 	mutateMoleState: (mole: number) => void;
 	mutateHolesState: (holes: number[][]) => void;
-	mutateClearState: () => void;
+	mutateClearReadyState: () => void;
 }

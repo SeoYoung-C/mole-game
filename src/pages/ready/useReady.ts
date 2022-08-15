@@ -2,22 +2,25 @@ import { useCallback, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
+import UseStore from 'stores';
+
 import useLessThenHalf from 'hooks/useLessThenHalf';
 
-import { UseReadyStore } from 'stores/ready';
 import { AppPaths } from 'constants/app-paths';
 
 const useReady = () => {
 	const navigate = useNavigate();
 
-	const { row, col, mole, changeRowState, changeColState, changeMoleState, changeHolesState } = UseReadyStore();
+	const { row, col, mole, mutateRowState, mutateColState, mutateMoleState, mutateHolesState } = UseStore(
+		state => state
+	);
 	const maxMole = useLessThenHalf({ row, col });
 
 	const onClickStart = useCallback(() => {
 		const newArray = Array.from(Array(row), () => Array(col).fill(0));
-		changeHolesState(newArray);
+		mutateHolesState(newArray);
 		navigate(AppPaths.play.path);
-	}, [navigate, changeHolesState, row, col]);
+	}, [navigate, mutateHolesState, row, col]);
 
 	const onClickRanking = useCallback(() => {
 		navigate(AppPaths.ranking.path);
@@ -25,30 +28,30 @@ const useReady = () => {
 
 	const onChangeRow = useCallback(
 		(value: number) => {
-			changeRowState(value);
+			mutateRowState(value);
 		},
-		[changeRowState]
+		[mutateRowState]
 	);
 
 	const onChangeCol = useCallback(
 		(value: number) => {
-			changeColState(value);
+			mutateColState(value);
 		},
-		[changeColState]
+		[mutateColState]
 	);
 
 	const onChangeMole = useCallback(
 		(value: number) => {
-			changeMoleState(value);
+			mutateMoleState(value);
 		},
-		[changeMoleState]
+		[mutateMoleState]
 	);
 
 	useEffect(() => {
 		if (maxMole < mole) {
-			changeMoleState(maxMole);
+			mutateMoleState(maxMole);
 		}
-	}, [changeMoleState, maxMole, mole]);
+	}, [mutateMoleState, maxMole, mole]);
 
 	return {
 		row,

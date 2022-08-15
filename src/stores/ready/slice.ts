@@ -30,7 +30,7 @@ export const ReadySlice: StateCreator<ReadyStateSlice> = set => ({
 		set(() => ({ holes }));
 	},
 
-	mutateClearState: () => {
+	mutateClearReadyState: () => {
 		set({ ...INITIAL_STATE });
 	}
 });

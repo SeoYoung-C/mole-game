@@ -9,7 +9,7 @@ import type { PlayStateSlice } from './play/interface';
 
 type Store = ReadyStateSlice & PlayStateSlice;
 
-const useStore = create<Store>(
+const UseStore = create<Store>(
 	devtools(
 		persist(
 			(set, get, api) => ({
@@ -31,4 +31,4 @@ const useStore = create<Store>(
 	)
 );
 
-export default useStore;
+export default UseStore;

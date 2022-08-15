@@ -3,7 +3,7 @@ export interface PlayState {
 }
 
 export interface PlayStateSlice extends PlayState {
-	mutateScoreIncreaseState: () => void;
-	mustateScoreDecreaseState: () => void;
-	mutateClearState: () => void;
+	mutateScoreStateIncrease: () => void;
+	mutateScoreStateDecrease: () => void;
+	mutateClearPlayState: () => void;
 }

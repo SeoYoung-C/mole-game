@@ -8,15 +8,15 @@ export const INITIAL_STATE: PlayState = {
 export const PlaySlice: StateCreator<PlayStateSlice> = set => ({
 	...INITIAL_STATE,
 
-	mutateScoreIncreaseState: () => {
+	mutateScoreStateIncrease: () => {
 		set(state => ({ score: state.score + 1 }));
 	},
 
-	mustateScoreDecreaseState: () => {
+	mutateScoreStateDecrease: () => {
 		set(state => ({ score: state.score - 1 }));
 	},
 
-	mutateClearState: () => {
+	mutateClearPlayState: () => {
 		set({ ...INITIAL_STATE });
 	}
 });

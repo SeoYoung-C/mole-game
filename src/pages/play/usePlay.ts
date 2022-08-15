@@ -1,8 +1,7 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { UseReadyStore } from 'stores/ready';
-import { UsePlayStore } from 'stores/play';
+import UseStore from 'stores';
 
 import useTimer from 'hooks/useTimer';
 
@@ -17,8 +16,8 @@ const usePlay = () => {
 	const holesAreaElementRef = useRef<HTMLTableElement>(null);
 	const holesEventListRef = useRef<SetTimeoutRefType>([]);
 
-	const { col, holes, mole } = UseReadyStore();
-	const { score, decreaseScore, increaseScore, clearPlayState } = UsePlayStore();
+	const { col, holes, mole, score, mutateScoreStateDecrease, mutateScoreStateIncrease, mutateClearPlayState } =
+		UseStore(state => state);
 
 	const [levelTime, setLevelTime] = useState<number>(1500);
 
@@ -60,11 +59,11 @@ const usePlay = () => {
 
 	const onClickStop = useCallback(() => {
 		end();
-		clearPlayState();
+		mutateClearPlayState();
 		setParseGame(false);
 		setStartGame(false);
 		navigate(AppPaths.ready.path);
-	}, [end, navigate, clearPlayState]);
+	}, [end, navigate, mutateClearPlayState]);
 
 	const onClickRestart = useCallback(() => {
 		start();
@@ -80,11 +79,11 @@ const usePlay = () => {
 			if (buttonRef) {
 				buttonRef.classList.add('active');
 				if (!moleElementClassList?.contains('hidden')) {
-					increaseScore();
+					mutateScoreStateIncrease();
 					moleElementClassList?.add('hidden');
 				}
 				if (!bombElementClassList?.contains('hidden')) {
-					decreaseScore();
+					mutateScoreStateDecrease();
 					bombElementClassList?.add('hidden');
 				}
 
@@ -92,7 +91,7 @@ const usePlay = () => {
 			}
 			clearHoleEvent('button', holesEventListRef.current, holesAreaElementRef.current);
 		},
-		[decreaseScore, increaseScore]
+		[mutateScoreStateDecrease, mutateScoreStateIncrease]
 	);
 
 	useEffect(() => {
