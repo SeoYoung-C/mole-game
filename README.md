@@ -83,13 +83,13 @@ v16.14.2
   	    set(() => ({ row }));
       },
       // ...  
-    })
+    });
     ```
 
     ```jsx
     // useReady.ts
     const onChangeRow = useCallback((value: number) => {
-	    mutateRowState(value);
+	  mutateRowState(value);
     },[mutateRowState]);
     ```
 
@@ -97,18 +97,17 @@ v16.14.2
 
     ```jsx
     // hooks > useLessThenHalf.ts
-
     const useLessThenHalf = (props: UseLessThenHalfProps) => {
       const { row, col } = props;
-	    const [half, setHalf] = useState<number>(1);
+	  const [half, setHalf] = useState<number>(1);
 
-	    useEffect(() => {
-	      const divide = (row * col) / 2;
-	      const value = Number.isInteger(divide) === true ? divide - 1 : Math.floor(divide);
-	      setHalf(value);
-	    }, [row, col]);
+	  useEffect(() => {
+	    const divide = (row * col) / 2;
+	    const value = Number.isInteger(divide) === true ? divide - 1 : Math.floor(divide);
+	    setHalf(value);
+	  }, [row, col]);
 
-	    return half;
+	  return half;
     };
     ```
 ---
@@ -129,78 +128,76 @@ v16.14.2
     ```jsx
     // pages > usePlay.ts
     const handleRendomHole = useCallback(() => {  
-		const eventHoleList = holes.flat().slice();
-		
-		  let moleNumber = 0;
-		  while (moleNumber < mole) {
-			  const selectMoleIndex = Math.floor(Math.random() * eventHoleList.length);
-			  eventHoleList.splice(selectMoleIndex, 1, selectMoleIndex);
-			  moleNumber += 1;
-		  }
+	  const eventHoleList = holes.flat().slice();
+      let moleNumber = 0;
+      while (moleNumber < mole) {
+        const selectMoleIndex = Math.floor(Math.random() * eventHoleList.length);
+        eventHoleList.splice(selectMoleIndex, 1, selectMoleIndex);
+        moleNumber += 1;
+      }
 
-		  visibleHoleEvent(
-			  eventHoleList,
-			  levelTime,
-			  holesAreaElementRef.current,
-			  holesEventListRef.current,
-			  handleHolesEventList
-		  );
-	  }, [mole, holes, levelTime]);
-
+      visibleHoleEvent(
+        eventHoleList,
+        levelTime,
+        holesAreaElementRef.current,
+        holesEventListRef.current,
+        handleHolesEventList
+      )
+    }, [mole, holes, levelTime]);
+    
     const { time, start, end, pouse } = useTimer(60, levelTime, handleRendomHole);
-
+    
     //... 중략
-
+    
     // 두더지 또는 폭탄 클릭시
-	const handleButtonElement = useCallback(buttonRef: HTMLButtonElement | null) => {
-		const buttonElementIndex = buttonRef?.id.replace('hole-button-', '');
-		const moleElementClassList = 
-            buttonRef?.querySelector(`#mole-${buttonElementIndex}`)?.classList;
-		const bombElementClassList = 
-            buttonRef?.querySelector(`#bomb-${buttonElementIndex}`)?.classList;
+    const handleButtonElement = useCallback(buttonRef: HTMLButtonElement | null) => {
+      const buttonElementIndex = buttonRef?.id.replace('hole-button-', '');
+      const moleElementClassList = buttonRef?.querySelector(`#mole-${buttonElementIndex}`)?.classList;
+      const bombElementClassList = buttonRef?.querySelector(`#bomb-${buttonElementIndex}`)?.classList;
+      
+      if (buttonRef) {
+        buttonRef.classList.add('active');
+        if (!moleElementClassList?.contains('hidden')) {
+          mutateScoreStateIncrease();
+          moleElementClassList?.add('hidden');
+        }
+        if (!bombElementClassList?.contains('hidden')) {
+          mutateScoreStateDecrease();
+          bombElementClassList?.add('hidden');
+        }
+        buttonRef.setAttribute('disabled', '');
+      }
+      
+      clearHoleEvent('button', holesEventListRef.current, holesAreaElementRef.current);
 
-		if (buttonRef) {
-			buttonRef.classList.add('active');
-			if (!moleElementClassList?.contains('hidden')) {
-				mutateScoreStateIncrease();
-				moleElementClassList?.add('hidden');
-			}
-			if (!bombElementClassList?.contains('hidden')) {
-				mutateScoreStateDecrease();
-				bombElementClassList?.add('hidden');
-			}
-
-			buttonRef.setAttribute('disabled', '');
-		}
-		clearHoleEvent('button', holesEventListRef.current, holesAreaElementRef.current);
-	}, [mutateScoreStateDecrease, mutateScoreStateIncrease]);
-
-	useEffect(() => {
-        // 0 초가 되면 게임 종료 / 게임 결과 화면으로 이동 / 1초마다 반복되던 interval timer clear
-		if (time === 0) {
-			clearHoleEvent('all', holesEventListRef.current);
-			holesEventListRef.current = [];
-			end();
-			navigate(AppPaths.result.path);
-		}
+    }, [mutateScoreStateDecrease, mutateScoreStateIncrease]);
+    
+    useEffect(() => {
+      // 0 초가 되면 게임 종료 / 게임 결과 화면으로 이동 / 1초마다 반복되던 interval timer clear
+      if (time === 0) {
+        clearHoleEvent('all', holesEventListRef.current);
+        holesEventListRef.current = [];
+        end();
+        navigate(AppPaths.result.path);
+      }
       // 시간이 지날때마다 폭탄 또는 두더지의 등장 타이밍을 빠르게 바꿔주는 변칙 요소 적용
-		switch (time) {
-			case 45:
-				setLevelTime(1250);
-				break;
-
-			case 30:
-				setLevelTime(1000);
-				break;
-
-			case 15:
-				setLevelTime(500);
-				break;
-
-			default:
-				break;
-		}
-	}, [time, end, navigate]);
+      switch (time) {
+        case 45:
+          setLevelTime(1250);
+          break;
+        
+        case 30:
+          setLevelTime(1000);
+          break;
+      
+        case 15:
+          setLevelTime(500);
+          break;
+  
+        default:
+          break;
+      }
+    }, [time, end, navigate]);
 
     ```
 ---
