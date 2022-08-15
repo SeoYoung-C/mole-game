@@ -13,8 +13,8 @@ function Ready() {
 			<h1 className="ready__title">Wake a mole!</h1>
 			<table className="ready__table">
 				<colgroup>
-					<col />
-					<col />
+					<col width="50%" />
+					<col width="50%" />
 				</colgroup>
 				<tbody>
 					<tr>
