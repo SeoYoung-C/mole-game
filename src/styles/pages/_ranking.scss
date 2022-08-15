@@ -59,6 +59,15 @@
           }
         }
       }
+
+      & > caption {
+        caption-side: bottom;
+        color: $brown;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 10px;
+        text-align: right;
+      }
     }
   }
 }

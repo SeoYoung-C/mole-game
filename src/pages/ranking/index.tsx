@@ -11,7 +11,7 @@ function Ranking() {
 	return (
 		<main className="ranking">
 			<h1>Ranking !</h1>
-			<p>순위는 마지막 게임 완료 날짜로부터 최대 30일까지만 저장 됩니다.</p>
+			<p>순위는 상위 10위까지, 마지막 게임 완료 날짜로부터 최대 30일까지만 저장 됩니다.</p>
 
 			{ranking.length > 0 ? (
 				<section className="ranking__content">
@@ -40,6 +40,7 @@ function Ranking() {
 								</tr>
 							))}
 						</tbody>
+						<caption>게임 순위는 게임 점수가 1점 이상일 때만 기록 됩니다.</caption>
 					</table>
 				</section>
 			) : (
