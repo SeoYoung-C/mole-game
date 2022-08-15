@@ -89,7 +89,8 @@ v16.14.2
     ```jsx
     // useReady.ts
     const onChangeRow = useCallback((value: number) => {
-	  mutateRowState(value);
+      mutateRowState(value);
+      // ... 
     },[mutateRowState]);
     ```
 
