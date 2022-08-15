@@ -37,13 +37,10 @@ const useResult = () => {
 
 			const rankList = parseRanking
 				.reduce((acc: Ranks[], cur) => {
-					if (
-						acc.findIndex(
-							({ date }) => formatDate(date, 'YYYYMMDDHHmmss') === formatDate(cur.date, 'YYYYMMDDHHmmss')
-						) === -1
-					) {
-						acc.push(cur);
-					}
+					const equalDateTime = acc.findIndex(
+						({ date }) => formatDate(date, 'YYYYMMDDHHmmss') === formatDate(cur.date, 'YYYYMMDDHHmmss')
+					);
+					if (equalDateTime === -1) acc.push(cur);
 					return acc;
 				}, [])
 				.sort((a, b) => {
