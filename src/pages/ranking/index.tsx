@@ -35,8 +35,12 @@ function Ranking() {
 							{ranking.map((item, index) => (
 								<tr key={item.date + index.toString()}>
 									<td>{index + 1}</td>
-									<td>{item.score}</td>
-									<td>{formatDate(item.date, 'YYYY-MM-DD AA hh:mm:ss', { isLocale: true })}</td>
+									<td>{item.score === 0 ? '-' : item.score}</td>
+									<td>
+										{item.date === '-'
+											? item.date
+											: formatDate(item.date, 'YYYY-MM-DD AA hh:mm:ss', { isLocale: true })}
+									</td>
 								</tr>
 							))}
 						</tbody>

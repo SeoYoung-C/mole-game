@@ -155,13 +155,23 @@ v16.14.2
       const moleElementClassList = buttonRef?.querySelector(`#mole-${buttonElementIndex}`)?.classList;
       const bombElementClassList = buttonRef?.querySelector(`#bomb-${buttonElementIndex}`)?.classList;
       
+      // ...  중략
+
       if (buttonRef) {
         buttonRef.classList.add('active');
+        // 두더지를 클릭한 경우 score + 1
         if (!moleElementClassList?.contains('hidden')) {
           mutateScoreStateIncrease();
           moleElementClassList?.add('hidden');
         }
+        // 폭탄 클릭한 경우
         if (!bombElementClassList?.contains('hidden')) {
+          // 만약 현재 score가 0 이라면, 게임을 종료하고 게임 결과 하면으로 이동
+          if (score === 0) {
+            handleGamveOver();
+            return;
+          }
+          // 만약 현재 score가 0이 아니라면 score -1
           mutateScoreStateDecrease();
           bombElementClassList?.add('hidden');
         }
@@ -170,17 +180,11 @@ v16.14.2
       
       clearHoleEvent('button', holesEventListRef.current, holesAreaElementRef.current);
 
-    }, [mutateScoreStateDecrease, mutateScoreStateIncrease]);
+    }, [mutateScoreStateDecrease, score, handleGamveOver, mutateScoreStateIncrease]);
     
     useEffect(() => {
-      // 0 초가 되면 게임 종료 / 게임 결과 화면으로 이동 / 1초마다 반복되던 interval timer clear
-      if (time === 0) {
-        clearHoleEvent('all', holesEventListRef.current);
-        holesEventListRef.current = [];
-        end();
-        navigate(AppPaths.result.path);
-      }
       // 시간이 지날때마다 폭탄 또는 두더지의 등장 타이밍을 빠르게 바꿔주는 변칙 요소 적용
+      // 0 초가 되면 게임 종료 / 게임 결과 화면으로 이동 / 1초마다 반복되던 interval timer clear
       switch (time) {
         case 45:
           setLevelTime(1250);
@@ -192,6 +196,10 @@ v16.14.2
       
         case 15:
           setLevelTime(500);
+          break;
+
+        case 0:
+          handleGamveOver();
           break;
   
         default:

@@ -25,13 +25,15 @@
       margin: 0 1rem 0.5rem 0;
     }
     & > table {
-      border: 2px solid $brown;
+      background: $brown;
+      border: 2px solid $beige;
       border-spacing: 0;
       text-align: center;
       width: calc(100% - 1rem);
       th {
-        border-bottom: 1px solid $brown;
-        border-left: 1px solid $brown;
+        border-bottom: 1px solid $beige;
+        border-left: 1px solid $beige;
+        color: $beige;
         font-weight: 800;
         padding: 0.3rem;
 
@@ -41,10 +43,12 @@
       }
 
       td {
-        border-bottom: 1px solid $brown;
-        border-left: 1px solid $brown;
+        border-bottom: 1px solid $beige;
+        border-left: 1px solid $beige;
+        color: $beige;
         padding: 0.5rem;
         text-align: center;
+
         &:first-child {
           border-left: unset;
         }

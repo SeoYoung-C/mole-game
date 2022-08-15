@@ -66,8 +66,6 @@ const usePlay = () => {
 	const onClickStop = useCallback(() => {
 		end();
 		mutateClearScoreState();
-		setParseGame(false);
-		setStartGame(false);
 		navigate(AppPaths.ready.path);
 	}, [end, navigate, mutateClearScoreState]);
 
