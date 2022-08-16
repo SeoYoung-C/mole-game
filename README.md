@@ -299,6 +299,7 @@ v16.14.2
 4. stylelint (scss 코드 컨벤션 유지와/ 코드 스타일 일관성 유지를 위함)
 5. prettier (코드 스타일 일관성 유지를 위함)
 6. eslint (코드 컨벤션 체크를 위함)
+7. jest (테스트 코드 작성을 위함)
 ```
 
 ## Copyright icon
